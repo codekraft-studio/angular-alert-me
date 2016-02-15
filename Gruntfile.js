@@ -39,7 +39,7 @@ module.exports = function(grunt) {
           style: 'compact'
         },
         files: {
-          'src/alert-me.css': 'src/alert-me.scss'
+          'dist/alert-me.css': 'src/alert-me.scss'
         }
       }
     }
@@ -53,5 +53,4 @@ module.exports = function(grunt) {
 
   // default task
   grunt.registerTask('default', ['watch']);
-
 };
