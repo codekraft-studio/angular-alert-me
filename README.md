@@ -1,4 +1,4 @@
-# angular-toast-me
+# angular-alert-me
 ##### a light module to help you create and manager alerts in your application
 
 ## Getting started
@@ -35,7 +35,7 @@ Let's start by creating a simple default alert message using the __create__ meth
 angular.module('app')
   .controller('MainCtrl', function(AlertMe) {
 
-    var myAlert = AlertMe.create('a simple toast');
+    var myAlert = AlertMe.create('a simple alert');
     console.log(myAlert);
   })
 ```
@@ -86,8 +86,8 @@ var msg = {
 ## Configurable settings:
 These settings can be edited using the method __configure__ of AlertMe service.
 * __maxNum__: max alerts to show ( default 0 = unlimited )
-* __verticalPosition__: vertical toast container position (default 'bottom')
-* __horizontalPosition__: horizontal toast container position (default 'right')
+* __verticalPosition__: vertical alert container position (default 'bottom')
+* __horizontalPosition__: horizontal alert container position (default 'right')
 * __className__: the default alert class to use in case of nothing is specified
 * __isTrustedHtml__: if the content has to been treated as HTML
 * __combineDuplications__: combine duplicated alerts (default true)
