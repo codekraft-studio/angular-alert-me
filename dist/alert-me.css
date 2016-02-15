@@ -1,0 +1,29 @@
+.tm-container { text-align: center; position: fixed; z-index: 10000; width: 100%; }
+.tm-container.top { top: 0; bottom: auto; }
+.tm-container.top .tm-nav { margin-top: 20px; }
+.tm-container.bottom { bottom: 0; top: auto; }
+.tm-container.bottom .tm-nav { margin-bottom: 20px; bottom: 0; top: auto; }
+.tm-container.left { left: 0; right: auto; }
+.tm-container.left .tm-nav { margin-left: 20px; text-align: left; left: 0; right: inherit; }
+.tm-container.right { right: 0; left: auto; }
+.tm-container.right .tm-nav { margin-right: 20px; text-align: right; left: inherit; right: 0; }
+.tm-container .tm-nav { display: inline-block; position: absolute; right: 0; left: 0; margin: 0 auto; padding: 0; list-style: none; }
+.tm-container .tm-list { list-style: none; }
+.tm-container .tm-alert { display: inline-block; padding: 15px; margin-bottom: 10px; border: 1px solid transparent; border-radius: 4px; }
+.tm-container .tm-alert:hover .close { opacity: .6; }
+.tm-container .tm-alert.default { background-color: #eee; border-color: #DBDBDB; color: #6A6A6A; }
+.tm-container .tm-alert.default .close { color: #6A6A6A; }
+.tm-container .tm-alert.success { color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; }
+.tm-container .tm-alert.success .close { color: #3c763d; }
+.tm-container .tm-alert.info { color: #31708f; background-color: #d9edf7; border-color: #bce8f1; }
+.tm-container .tm-alert.info .close { color: #31708f; }
+.tm-container .tm-alert.warning { color: #8a6d3b; background-color: #fcf8e3; border-color: #faebcc; }
+.tm-container .tm-alert.warning .close { color: #8a6d3b; }
+.tm-container .tm-alert.danger { color: #a94442; background-color: #f2dede; border-color: #ebccd1; }
+.tm-container .tm-alert.danger .close { color: #a94442; }
+.tm-container .tm-alert .title { font-weight: 600; padding-right: 5px; }
+.tm-container .tm-alert .content { padding-right: 5px; }
+.tm-container .tm-alert .count { font-weight: 600; float: left; padding-right: 5px; }
+.tm-container .tm-alert .close { float: right; font-size: 21px; font-weight: bold; line-height: 1; color: #000; text-shadow: 0 1px 0 #fff; opacity: .2; text-transform: lowercase; position: relative; top: -3px; cursor: pointer; }
+
+/*# sourceMappingURL=alert-me.css.map */
