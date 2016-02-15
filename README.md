@@ -1,4 +1,4 @@
-# angular-toast-me
+# angular-alert-me
 ##### a light module to help you create and manager alerts in your application
 
 ## Getting started
