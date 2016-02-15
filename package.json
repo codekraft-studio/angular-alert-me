@@ -1,8 +1,8 @@
 {
   "name": "angular-alert-me",
   "version": "1.0.0",
-  "description": "enjoy using toast messages in you application with ToastMe module, free to use, free to improve!",
-  "main": "",
+  "description": "a light module to help you create and manager alerts in your application",
+  "main": "Gruntfile.js",
   "directories": {
     "example": "example"
   },
@@ -17,5 +17,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "codekraft-studio",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codekraft-studio/angular-alert-me.git"
+  },
+  "keywords": [
+    "angularjs",
+    "alert",
+    "notifications",
+    "toast"
+  ],
+  "bugs": {
+    "url": "https://github.com/codekraft-studio/angular-alert-me/issues"
+  },
+  "homepage": "https://github.com/codekraft-studio/angular-alert-me#readme"
 }
