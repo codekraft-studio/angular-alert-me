@@ -1,0 +1,171 @@
+.tm-container {
+
+  text-align: center;
+  position: fixed;
+  z-index: 10000;
+  width: 100%;
+
+  &.top{
+    top: 0;
+    bottom: auto;
+
+    .tm-nav {
+      margin-top: 20px;
+    }
+
+  }
+
+  &.bottom{
+    bottom: 0;
+    top: auto;
+
+    .tm-nav {
+      margin-bottom: 20px;
+      bottom: 0;
+      top: auto;
+    }
+
+  }
+
+  &.left{
+    left: 0;
+    right: auto;
+
+    .tm-nav {
+      margin-left: 20px;
+      text-align: left;
+
+      left: 0;
+      right: inherit;
+    }
+
+  }
+
+  &.right{
+    right: 0;
+    left: auto;
+
+    .tm-nav {
+      margin-right: 20px;
+      text-align: right;
+
+      left: inherit;
+      right: 0;
+    }
+
+  }
+
+  // child classes
+  .tm-nav{
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tm-list{
+    list-style: none;
+  }
+
+  // the alert element
+  .tm-alert{
+
+    display: inline-block;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    &:hover .close {
+      opacity: .6;
+    }
+
+    &.default {
+      background-color: #eee;
+      border-color: #DBDBDB;
+      color: #6A6A6A;
+
+      .close {
+        color: #6A6A6A;
+      }
+
+    }
+
+    &.success {
+      color: #3c763d;
+      background-color: #dff0d8;
+      border-color: #d6e9c6;
+
+      .close {
+        color: #3c763d;
+      }
+
+    }
+
+    &.info {
+      color: #31708f;
+      background-color: #d9edf7;
+      border-color: #bce8f1;
+
+      .close {
+        color: #31708f;
+      }
+
+    }
+
+    &.warning {
+      color: #8a6d3b;
+      background-color: #fcf8e3;
+      border-color: #faebcc;
+
+      .close {
+        color: #8a6d3b;
+      }
+
+    }
+
+    &.danger {
+      color: #a94442;
+      background-color: #f2dede;
+      border-color: #ebccd1;
+      .close {
+        color: #a94442;
+      }
+    }
+
+    .title {
+      font-weight: 600;
+      padding-right: 5px;
+    }
+
+    .content {
+      padding-right: 5px;
+    }
+
+    .count {
+      font-weight: 600;
+      float: left;
+      padding-right: 5px;
+    }
+
+    .close {
+      float: right;
+      font-size: 21px;
+      font-weight: bold;
+      line-height: 1;
+      color: #000;
+      text-shadow: 0 1px 0 #fff;
+      opacity: .2;
+      text-transform: lowercase;
+      position: relative;
+      top: -3px;
+      cursor: pointer;
+    }
+
+  }
+
+
+}

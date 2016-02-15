@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+  <meta charset="utf-8">
+  <title>AlertMe Angular Module - codekraft-studio</title>
+  <link rel="stylesheet" href="../src/alert-me.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body ng-controller="MainCtrl">
+
+  <article role="main">
+
+    <header>
+      <div class="hcont">
+        <h1>angular-alert-me</h1>
+        <h2>manage your app alerts easily with this module</h2>
+      </div>
+      <a href="https://github.com/codekraft-studio"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </header>
+
+    <section>
+
+      <div class="hcont">
+
+        <h5>Basic alert:</h5>
+
+        <p>
+          Try to write an alert with some custom text, by default the alerts will dimiss automatically after a timeout that you can always customize.
+        </p>
+
+        <form name="myForm" class="form-inline" ng-submit="random(input)">
+          <div class="form-group">
+            <input type="text" class="form-control input-lg" ng-model="input" required>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default btn-lg" ng-disabled="myForm.$invalid">Send</button>
+          </div>
+        </form>
+
+        <h5>Preset alert methods:</h5>
+
+        <p>
+          Four different common alerts quick call methods.
+        </p>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-info" ng-click="info()">Info</button>
+          <button type="button" class="btn btn-success" ng-click="success()">Success</button>
+          <button type="button" class="btn btn-warning" ng-click="warning()">Warning</button>
+          <button type="button" class="btn btn-danger" ng-click="danger()">Danger</button>
+        </div>
+
+        <h5>Custom class alert:</h5>
+
+        <p>
+          You can also create a custom alert by specifing the class you want.
+        </p>
+
+        <form name="otherForm" class="form-inline" ng-submit="doCustom(customAlert)">
+          <div class="form-group">
+            <input type="text" class="form-control input-lg" ng-model="customAlert" required>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default btn-lg" ng-disabled="otherForm.$invalid">Send</button>
+          </div>
+        </form>
+
+        <h5>Alert with HTML content:</h5>
+
+        <p>
+          You can insert a HTML message for your alert content by specifing the <b>isTrustedHtml</b> addribute.
+          <br>The attribute will enable the directive to threat the given text as HTML.
+        </p>
+
+        <form name="myHTMLForm" class="form-inline" ng-submit="randomHTML(richInput)">
+
+          <div class="form-group">
+            <input type="text" class="form-control input-lg" ng-model="richInput" required>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-default btn-lg" ng-disabled="myHTMLForm.$invalid">Send</button>
+          </div>
+
+        </form>
+
+        <h5>Using a promise as alert timeout:</h5>
+
+        <p>
+          You can also use a real http request as dismiss timing for your alert, passing a promise to <b>resolve</b> attribute in the same way you will <!DOCTYPE html>
+          <br>on angular routing system in resolve method. Try the button below to see it in action.
+        </p>
+
+        <button type="button" class="btn btn-default btn-large" ng-click="getRepos()">
+          Fetch some data
+        </button>
+
+      </div>
+
+      <div class="hcont">
+
+        <div ng-show="reposList.length" ng-cloak>
+
+          <h5>Check out also, our other repositories!</h5>
+
+          <ul class="repo-response">
+            <li class="repo-item" ng-repeat="repo in reposList">
+              <a ng-href="{{repo.url}}">
+                <span class="repo-heading" ng-bind="repo.name"></span>
+                <span class="repo-text" ng-bind="repo.description"></span>
+              </a>
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </article>
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
+<script src="../dist/alert-me.js"></script>
+<script src="angular-translate.min.js"></script>
+
+<script>
+
+angular.module('app', [
+  'alert-me',
+  'pascalprecht.translate'
+])
+
+.config(function($translateProvider) {
+
+  $translateProvider.translations('en', {
+    TITLE: 'Translate:',
+    MESSAGE: 'This will work with dynamic translations.'
+  });
+
+  $translateProvider.translations('it', {
+    TITLE: 'Traduci:',
+    MESSAGE: 'Questo funzionerà con le traduzioni dinamiche.'
+  });
+
+  $translateProvider.preferredLanguage('en');
+})
+
+.controller('MainCtrl', function($scope,$q,$timeout,$http,$filter,$translate,AlertMe){
+
+  // default classes used in module
+  var classes = ['info','success','warning','danger'];
+
+  // configure the module settings
+  AlertMe.configure({
+    verticalPosition: 'bottom',
+    className: 'default',
+    dismissOnTimeout: true,
+    dismissOnClick: false,
+    dismissButton: true,
+    onBeforeCreate: function(conf) {
+      return true;
+    }
+  });
+
+  // introduction
+  var introToast = AlertMe.create({
+    title: 'AlertMe:',
+    className: 'info',
+    content: 'easy way to deal with alerts',
+    dismissButton: false,
+    dismissOnTimeout: false,
+    dismissOnClick: false
+  })
+
+  console.log("Alert created:", introToast);
+
+  // danger sample
+  var dangerToast = AlertMe.create({
+    title: 'Callback:',
+    content: 'a simple callback example',
+    className: 'danger',
+    dismissOnClick: true,
+    dismissOnTimeout: false,
+    onDismiss: function(msg) {
+      alert('hallo, my callback!')
+    }
+  })
+
+  console.log("Alert created:", dangerToast);
+
+  $scope.doTranslatedAlert = function() {
+    // danger sample
+    var translatedToast = AlertMe.create({
+      title: $filter('translate')('TITLE'),
+      content: $filter('translate')('MESSAGE'),
+      className: 'success',
+      dismissOnClick: true,
+      dismissOnTimeout: false
+    })
+  }
+
+
+  $scope.changeLang = function(lang) {
+    $translate.use(lang);
+  }
+
+  // run http request
+  $scope.getRepos = function() {
+
+    var msg = {
+      title: 'gitHub:',
+      content: 'download in progress..',
+      className: 'warning',
+      dismissButton: false,
+      resolve: function() {
+
+        var deferred = $q.defer()
+
+        $timeout(function() {
+
+          $http.get('https://api.github.com/users/codekraft-studio/repos')
+          .success(function(response) {
+            $scope.reposList = response;
+            deferred.resolve()
+          })
+
+        }, 1000)
+
+        return deferred.promise;
+      }
+    }
+
+    AlertMe.create(msg);
+  }
+
+  // create custom class alert
+  $scope.doCustom = function(text) {
+
+    var msg = {
+      title: 'Custom:',
+      content: text,
+      className: 'dark-alert',
+      dismissOnTimeout: false
+    }
+
+    return AlertMe.create(msg);
+  }
+
+  // random class message
+  $scope.random = function(text) {
+
+    var msg = {
+      content: text,
+      dismissOnTimeout: false,
+      onAfterCreate: function() {
+        $scope.input = '';
+      }
+    }
+
+    return AlertMe.create(msg);
+  }
+
+  // random class message
+  $scope.randomHTML = function(text) {
+
+    var msg = {
+      content: text,
+      isTrustedHtml: true,
+      onAfterCreate: function() {
+        $scope.richInput = '';
+      },
+      className: classes[ Math.floor(Math.random()*classes.length) ]
+    }
+
+    return AlertMe.create(msg);
+  }
+
+  $scope.info = function() {
+    return AlertMe.info('this is a info message');
+  }
+
+  $scope.success = function() {
+    return AlertMe.success('this is a success message');
+  }
+
+  $scope.warning = function() {
+    return AlertMe.warning('this is a warning message');
+  }
+
+  $scope.danger = function() {
+    return AlertMe.danger('this is a danger message');
+  }
+
+})
+
+</script>
+</html>
