@@ -1,6 +1,8 @@
 # angular-alert-me
 ##### a light module to help you create and manager alerts in your application
 
+## [DEMO](http://www.codekraft.it/demos/angular-alert-me/)
+
 ## Getting started
 Download the module using npm:
 ```bash
