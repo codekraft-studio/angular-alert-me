@@ -4,23 +4,40 @@ angular.module('alert-me', [])
  * At start check if element is
  * in the document body
  */
-.run(function($document) {
+.run(function($document,$templateCache) {
+
+  var mainTmpl = '<div class="tm-container {{posV}} {{posH}}">'+
+                  '<ul class="tm-nav" >'+
+                    '<alert-message ng-repeat="message in messages" message="message">'+
+                    '</alert-message>'+
+                  '</ul>'+
+                '</div>';
+
+  var listTmpl = '<li class="tm-list" ng-click="clickEvent($event)">' +
+                    '<div class="tm-alert {{message.className}}">' +
+                      '<span ng-show="message.count > 1" class="count" ng-bind="message.count"></span>' +
+                      '<span ng-if="message.title" class="title" ng-bind="message.title"></span>' +
+                      '<span ng-if="message.isTrustedHtml" class="content" ng-bind-html="message.content"></span>' +
+                      '<span ng-if="!message.isTrustedHtml" class="content" ng-bind="message.content"></span>' +
+                      '<span ng-if="message.dismissButton" class="close" ng-click="closeAlert()">X</span>' +
+                    '</div>' +
+                  '</li>';
+
+  $templateCache.put('alert-me/main-template.html', mainTmpl);
+  $templateCache.put('alert-me/list-template.html', listTmpl);
+
   // check if element is in page
   if( !$document.find('alert-me').length ) {
     return $document[0].body.appendChild( $document[0].createElement('alert-me') );
   }
+  
 })
 
 .directive('alertMe', function(AlertMe){
 
   var directive = {
     restrict: 'E',
-    template:   '<div class="tm-container {{posV}} {{posH}}">'+
-                  '<ul class="tm-nav" >'+
-                    '<alert-message ng-repeat="message in messages" message="message">'+
-                    '</alert-message>'+
-                  '</ul>'+
-                '</div>',
+    templateUrl: 'alert-me/main-template.html',
     link: link
   }
 
@@ -33,7 +50,7 @@ angular.module('alert-me', [])
     scope.posH = AlertMe.defaults.horizontalPosition;
     scope.posV = AlertMe.defaults.verticalPosition;
   }
-
+  
 })
 
 .directive('alertMessage', function($timeout,$q,$sce,$location,AlertMe) {
@@ -46,15 +63,7 @@ angular.module('alert-me', [])
     restrict: 'E',
     replace: true,
     scope: scope,
-    template: '<li class="tm-list">' +
-                '<div class="tm-alert {{message.className}}">' +
-                  '<span ng-show="message.count > 1" class="count" ng-bind="message.count"></span>' +
-                  '<span ng-if="message.title" class="title" ng-bind="message.title"></span>' +
-                  '<span ng-if="message.isTrustedHtml" class="content" ng-bind-html="message.content"></span>' +
-                  '<span ng-if="!message.isTrustedHtml" class="content" ng-bind="message.content"></span>' +
-                  '<span ng-if="message.dismissButton" class="close" ng-click="closeAlert()">X</span>' +
-                '</div>' +
-              '</li>',
+    templateUrl: 'alert-me/list-template.html',
     link: link
   }
 
@@ -75,6 +84,16 @@ angular.module('alert-me', [])
     }
 
     /**
+     * If dismissOnClick is set
+     * add the click event binder
+     */
+    scope.clickEvent = function(e) {
+      if( scope.message.dismissOnClick ) {
+        return scope.closeAlert()
+      }
+    }
+
+    /**
      * If message depend on a function
      * resolve is and than close the alert
      */
@@ -82,22 +101,6 @@ angular.module('alert-me', [])
 
       // wait until promise is resolved
       return $q.when( scope.message.resolve(), scope.closeAlert);
-    }
-
-    /**
-     * If dismissOnClick is set
-     * add the click event binder
-     */
-    if( scope.message.dismissOnClick ) {
-      // bind click
-      element.bind('click', function(e) {
-        scope.$apply(function(){
-          // clear timeout promise
-          if(promise) { $timeout.cancel(promise); }
-          // dismiss message
-          return scope.closeAlert()
-        })
-      })
     }
 
     // if property dismissOnTimeout
@@ -121,6 +124,7 @@ angular.module('alert-me', [])
           return scope.closeAlert()
         }, (scope.message.dismissTimeout*1000) );
       })
+
     }
 
     // watch if message count increase
