@@ -157,7 +157,7 @@ angular.module('alert-me', [])
     maxNum: 0, // max alerts to show ( default unlimited )
     verticalPosition: 'top', // vertical toast container position
     horizontalPosition: 'right', // horizontal toast container position
-    className: 'info', // default classname
+    className: 'default', // default classname
     isTrustedHtml: false, // if content is HTML
     combineDuplications: true, // combine duplicated alerts (default true)
     dismissButton: false, // show / hide the dismiss button
