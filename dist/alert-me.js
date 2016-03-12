@@ -37,6 +37,7 @@ angular.module('alert-me', [])
 
   var directive = {
     restrict: 'E',
+    scope: true, // isolated scope
     templateUrl: 'alert-me/main-template.html',
     link: link
   }
@@ -50,7 +51,7 @@ angular.module('alert-me', [])
     scope.posH = AlertMe.defaults.horizontalPosition;
     scope.posV = AlertMe.defaults.verticalPosition;
   }
-  
+
 })
 
 .directive('alertMessage', function($timeout,$q,$sce,$location,AlertMe) {
@@ -160,10 +161,10 @@ angular.module('alert-me', [])
     className: 'default', // default classname
     isTrustedHtml: false, // if content is HTML
     combineDuplications: true, // combine duplicated alerts (default true)
-    dismissButton: false, // show / hide the dismiss button
-    dismissOnTimeout: false, // dismiss alert on timeout
+    dismissButton: true, // show / hide the dismiss button
+    dismissOnTimeout: true, // dismiss alert on timeout
     dismissTimeout: 4, // the dismiss timeout (in seconds)
-    dismissOnClick: false, // dimiss alert on click
+    dismissOnClick: true, // dimiss alert on click
     onBeforeCreate: function(msg) { // on before create funtion
       return true; // returning false will block the alert
     },

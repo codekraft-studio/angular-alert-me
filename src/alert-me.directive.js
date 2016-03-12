@@ -2,6 +2,7 @@
 
   var directive = {
     restrict: 'E',
+    scope: true, // isolated scope
     templateUrl: 'alert-me/main-template.html',
     link: link
   }
@@ -15,7 +16,7 @@
     scope.posH = AlertMe.defaults.horizontalPosition;
     scope.posV = AlertMe.defaults.verticalPosition;
   }
-  
+
 })
 
 .directive('alertMessage', function($timeout,$q,$sce,$location,AlertMe) {

@@ -11,10 +11,10 @@
     className: 'default', // default classname
     isTrustedHtml: false, // if content is HTML
     combineDuplications: true, // combine duplicated alerts (default true)
-    dismissButton: false, // show / hide the dismiss button
-    dismissOnTimeout: false, // dismiss alert on timeout
+    dismissButton: true, // show / hide the dismiss button
+    dismissOnTimeout: true, // dismiss alert on timeout
     dismissTimeout: 4, // the dismiss timeout (in seconds)
-    dismissOnClick: false, // dimiss alert on click
+    dismissOnClick: true, // dimiss alert on click
     onBeforeCreate: function(msg) { // on before create funtion
       return true; // returning false will block the alert
     },
