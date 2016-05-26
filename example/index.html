@@ -141,13 +141,10 @@ angular.module('app', [
   'alert-me'
 ])
 
-.controller('MainCtrl', function($scope,$q,$timeout,$http,$filter,AlertMe){
+.config(function(AlertProvider) {
 
-  // default classes used in module
-  var classes = ['info','success','warning','danger'];
-
-  // configure the module settings
-  AlertMe.configure({
+  // configure the global module options
+  AlertProvider.configure({
     verticalPosition: 'bottom',
     className: 'default',
     dismissOnTimeout: true,
@@ -157,6 +154,13 @@ angular.module('app', [
       return true;
     }
   });
+
+})
+
+.controller('MainCtrl', function($scope,$q,$timeout,$http,$filter,AlertMe){
+
+  // default classes used in module
+  var classes = ['info','success','warning','danger'];
 
   // introduction
   var introToast = AlertMe.create({
