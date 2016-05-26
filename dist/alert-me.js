@@ -148,36 +148,18 @@ angular.module('alert-me', [])
 
 })
 
-.factory('AlertMe', function($sce, $q){
+.factory('AlertMe', function($sce, $q, Alert){
 
   // all the messages
-  var messages = [];
+  var _messages = [];
 
   // default view and message options
-  var defaults = {
-    maxNum: 0, // max alerts to show ( default unlimited )
-    verticalPosition: 'top', // vertical toast container position
-    horizontalPosition: 'right', // horizontal toast container position
-    className: 'default', // default classname
-    isTrustedHtml: false, // if content is HTML
-    combineDuplications: true, // combine duplicated alerts (default true)
-    dismissButton: true, // show / hide the dismiss button
-    dismissOnTimeout: true, // dismiss alert on timeout
-    dismissTimeout: 4, // the dismiss timeout (in seconds)
-    dismissOnClick: true, // dimiss alert on click
-    onBeforeCreate: function(msg) { // on before create funtion
-      return true; // returning false will block the alert
-    },
-    onAfterCreate: null, // on create callback
-    onBeforeDismiss: null, // on before alert dismiss
-    onDismiss: null // on dismiss callback
-  };
+  var _defaults = Alert.defaults;
 
   // the service public methods
   var service = {
-    defaults: defaults,
-    configure: _configure,
-    messages: messages,
+    defaults: _defaults,
+    messages: _messages,
     create: _create,
     dismiss: _dismiss,
     info: _info,
@@ -188,13 +170,6 @@ angular.module('alert-me', [])
 
   return service;
 
-  // change default options
-  function _configure(params) {
-    angular.forEach(params, function(key, val) {
-      if(defaults.hasOwnProperty(val)) { defaults[val] = key; }
-    })
-  }
-
   function _create(msg) {
 
     // get the toast object or
@@ -202,7 +177,7 @@ angular.module('alert-me', [])
     msg = ( typeof msg === 'object' ) ? msg : {content: msg};
 
     // extend message options with defaults
-    msg = angular.extend( {}, defaults, msg )
+    msg = angular.extend( {}, _defaults, msg )
 
     // if on before create function is false
     if( angular.isFunction(msg.onBeforeCreate(msg)) && !msg.onBeforeCreate(msg) ) {
@@ -218,24 +193,24 @@ angular.module('alert-me', [])
     // if there are more messages than maximum
     // and the messages position is top, remove first
     // otherwise remove last
-    if( msg.maxNum && messages.length >= msg.maxNum && msg.verticalPosition === 'top' ) {
+    if( msg.maxNum && _messages.length >= msg.maxNum && msg.verticalPosition === 'top' ) {
       // dismiss first
-      this.dismiss( messages[0].id );
+      this.dismiss( _messages[0].id );
 
-    } else if( msg.maxNum && messages.length >= msg.maxNum && msg.verticalPosition === 'bottom' ) {
+    } else if( msg.maxNum && _messages.length >= msg.maxNum && msg.verticalPosition === 'bottom' ) {
       // dismiss last
-      this.dismiss( messages[messages.length-1].id );
+      this.dismiss( _messages[_messages.length-1].id );
     }
 
     // combine duplications of
-    // messages that have same attributes
+    // _messages that have same attributes
     if( msg.combineDuplications ) {
       // check for equal objects
-      for (var i = 0; i < messages.length; i++) {
-        // if messages has same content and class
+      for (var i = 0; i < _messages.length; i++) {
+        // if _messages has same content and class
         // return and don't show the toast
-        if( messages[i].content == msg.content && messages[i].className == msg.className ) {
-          return messages[i].count++;
+        if( _messages[i].content == msg.content && _messages[i].className == msg.className ) {
+          return _messages[i].count++;
         }
       }
     }
@@ -247,7 +222,7 @@ angular.module('alert-me', [])
     msg.content = (msg.isTrustedHtml) ? $sce.trustAsHtml(msg.content) : msg.content;
 
     // push to correct position
-    ( msg.verticalPosition === 'bottom' ) ? messages.unshift(msg) : messages.push(msg);
+    ( msg.verticalPosition === 'bottom' ) ? _messages.unshift(msg) : _messages.push(msg);
 
     // return created message id
     if( msg.onAfterCreate && angular.isFunction(msg.onAfterCreate) ) {
@@ -261,14 +236,14 @@ angular.module('alert-me', [])
 
   // dismiss existing alert by ID
   function _dismiss(id) {
-    // loop through messages
-    for (var i = 0; i < messages.length; i++) {
+    // loop through _messages
+    for (var i = 0; i < _messages.length; i++) {
       // find matching message id
-      if( messages[i].id == id ) {
+      if( _messages[i].id == id ) {
         // copy message
-        var message = angular.copy(messages[i]);
+        var message = angular.copy(_messages[i]);
         // remove it
-        messages.splice(i, 1);
+        _messages.splice(i, 1);
         // if valid function
         if( angular.isFunction(message.onDismiss) ) {
           // run callback passing message
@@ -294,6 +269,44 @@ angular.module('alert-me', [])
 
   function _danger(msg) {
     return this.create( {content: msg, className: 'danger'} );
+  }
+
+})
+
+.provider('Alert', function () {
+
+  // the module defaults
+  var _defaults = {
+    maxNum: 0, // max alerts to show ( default unlimited )
+    verticalPosition: 'top', // vertical toast container position
+    horizontalPosition: 'right', // horizontal toast container position
+    className: 'default', // default classname
+    isTrustedHtml: false, // if content is HTML
+    combineDuplications: true, // combine duplicated alerts (default true)
+    dismissButton: true, // show / hide the dismiss button
+    dismissOnTimeout: true, // dismiss alert on timeout
+    dismissTimeout: 4, // the dismiss timeout (in seconds)
+    dismissOnClick: true, // dimiss alert on click
+    onBeforeCreate: function(msg) { // on before create funtion
+      return true; // returning false will block the alert
+    },
+    onAfterCreate: null, // on create callback
+    onBeforeDismiss: null, // on before alert dismiss
+    onDismiss: null // on dismiss callback
+  };
+
+  // configure default settings
+  this.configure = function (options) {
+    return _defaults = angular.extend(_defaults, options);
+  }
+
+  // return object
+  this.$get = function () {
+
+    return {
+      defaults: _defaults,
+    }
+
   }
 
 })
