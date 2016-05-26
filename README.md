@@ -54,12 +54,22 @@ var msg = {
 AlertMe.create(msg);
 ```
 
-You can override the module defaults settings using __configure__ method:
+You can override the module defaults settings using __configure__ method inside the config function:
+
 ```javascript
-AlertMe.configure({
-  className: 'success' // this will be the default class if nothing is passed
-})
+angular.module('app')
+  .config(function(AlertProvider) {
+
+    AlertProvider.configure({
+      className: 'success' // this will be the default class if nothing is passed,
+      onBeforeCreate: function(conf) {
+        // do some checks
+      }
+    })
+
+  })
 ```
+
 But you can always set override the properties per message passing a object to the __create__ method, like in this example:
 
 ```javascript
