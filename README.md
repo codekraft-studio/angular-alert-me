@@ -42,7 +42,7 @@ angular.module('app')
   })
 ```
 
-By default the message class is **info**, but you can create a fully custom alert passing a object to the __create__ method.
+By default the message class is **default**, but you can create a fully custom alert passing a object to the __create__ method, that will override the default options for that alert.
 There is a list of supported class that comes with the style, but you can use your personal too.
 
 ```javascript
