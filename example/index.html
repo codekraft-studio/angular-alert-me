@@ -134,147 +134,149 @@
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular-animate.min.js"></script>
 <script src="../dist/alert-me.js"></script>
 <script>
 
-angular.module('app', [
-  'alert-me'
-])
+  angular.module('app', [
+    'alert-me',
+    'ngAnimate'
+  ])
 
-.config(function(AlertProvider) {
+  .config(function(AlertProvider) {
 
-  // configure the global module options
-  AlertProvider.configure({
-    verticalPosition: 'bottom',
-    className: 'default',
-    dismissOnTimeout: true,
-    dismissOnClick: true,
-    dismissButton: true,
-    onBeforeCreate: function(conf) {
-      return true;
-    }
-  });
+    // configure the global module options
+    AlertProvider.configure({
+      verticalPosition: 'bottom',
+      className: 'default',
+      dismissOnTimeout: true,
+      dismissOnClick: true,
+      dismissButton: true,
+      onBeforeCreate: function(conf) {
+        return true;
+      }
+    });
 
-})
-
-.controller('MainCtrl', function($scope,$q,$timeout,$http,$filter,AlertMe){
-
-  // default classes used in module
-  var classes = ['info','success','warning','danger'];
-
-  // introduction
-  var introToast = AlertMe.create({
-    title: 'AlertMe:',
-    className: 'info',
-    content: 'a easy alert manager from <a href="https://github.com/codekraft-studio" target="_blank">codekraft-studio</a>',
-    isTrustedHtml: true,
-    dismissButton: true,
-    dismissOnTimeout: false,
-    dismissOnClick: false
   })
 
-  console.log("Alert created:", introToast);
+  .controller('MainCtrl', function($scope,$q,$timeout,$http,$filter,AlertMe){
 
-  // danger sample
-  var dangerToast = AlertMe.create({
-    title: 'Callback:',
-    content: 'a simple callback example',
-    className: 'danger',
-    dismissOnClick: true,
-    dismissOnTimeout: false,
-    onDismiss: function(msg) {
-      alert('hallo, my callback!')
-    }
-  })
+    // default classes used in module
+    var classes = ['info','success','warning','danger'];
 
-  console.log("Alert created:", dangerToast);
-
-  // run http request
-  $scope.getRepos = function() {
-
-    var msg = {
-      title: 'gitHub:',
-      content: 'download in progress..',
-      className: 'warning',
-      dismissButton: false,
-      resolve: function() {
-
-        var deferred = $q.defer()
-
-        $timeout(function() {
-
-          $http.get('https://api.github.com/users/codekraft-studio/repos')
-          .success(function(response) {
-            $scope.reposList = response;
-            deferred.resolve()
-          })
-
-        }, 1000)
-
-        return deferred.promise;
-      }
-    }
-
-    AlertMe.create(msg);
-  }
-
-  // create custom class alert
-  $scope.doCustom = function(text) {
-
-    var msg = {
-      title: 'Custom:',
-      content: text,
-      className: 'dark-alert',
-      dismissOnTimeout: true,
-      dismissButton: false
-    }
-
-    return AlertMe.create(msg);
-  }
-
-  // random class message
-  $scope.basicAlert = function(text) {
-
-    var msg = {
-      content: text,
-      dismissOnTimeout: true,
-      onAfterCreate: function() {
-        $scope.input = '';
-      }
-    }
-
-    return AlertMe.create(msg);
-  }
-
-  // random class message
-  $scope.randomHTML = function(text) {
-
-    var msg = {
-      content: text,
+    // introduction
+    var introToast = AlertMe.create({
+      title: 'AlertMe:',
+      className: 'info',
+      content: 'a easy alert manager from <a href="https://github.com/codekraft-studio" target="_blank">codekraft-studio</a>',
       isTrustedHtml: true,
-      className: classes[ Math.floor(Math.random()*classes.length) ]
+      dismissButton: true,
+      dismissOnTimeout: false,
+      dismissOnClick: false
+    })
+
+    console.log("Alert created:", introToast);
+
+    // danger sample
+    var dangerToast = AlertMe.create({
+      title: 'Callback:',
+      content: 'a simple callback example',
+      className: 'danger',
+      dismissOnClick: true,
+      dismissOnTimeout: false,
+      onDismiss: function(msg) {
+        alert('hallo, my callback!')
+      }
+    })
+
+    console.log("Alert created:", dangerToast);
+
+    // run http request
+    $scope.getRepos = function() {
+
+      var msg = {
+        title: 'gitHub:',
+        content: 'download in progress..',
+        className: 'warning',
+        dismissButton: false,
+        resolve: function() {
+
+          var deferred = $q.defer()
+
+          $timeout(function() {
+
+            $http.get('https://api.github.com/users/codekraft-studio/repos')
+            .success(function(response) {
+              $scope.reposList = response;
+              deferred.resolve()
+            })
+
+          }, 1000)
+
+          return deferred.promise;
+        }
+      }
+
+      AlertMe.create(msg);
     }
 
-    return AlertMe.create(msg);
-  }
+    // create custom class alert
+    $scope.doCustom = function(text) {
 
-  $scope.info = function() {
-    return AlertMe.info('this is a info message');
-  }
+      var msg = {
+        title: 'Custom:',
+        content: text,
+        className: 'dark-alert',
+        dismissOnTimeout: true,
+        dismissButton: false
+      }
 
-  $scope.success = function() {
-    return AlertMe.success('this is a success message');
-  }
+      return AlertMe.create(msg);
+    }
 
-  $scope.warning = function() {
-    return AlertMe.warning('this is a warning message');
-  }
+    // random class message
+    $scope.basicAlert = function(text) {
 
-  $scope.danger = function() {
-    return AlertMe.danger('this is a danger message');
-  }
+      var msg = {
+        content: text,
+        dismissOnTimeout: true,
+        onAfterCreate: function() {
+          $scope.input = '';
+        }
+      }
 
-})
+      return AlertMe.create(msg);
+    }
+
+    // random class message
+    $scope.randomHTML = function(text) {
+
+      var msg = {
+        content: text,
+        isTrustedHtml: true,
+        className: classes[ Math.floor(Math.random()*classes.length) ]
+      }
+
+      return AlertMe.create(msg);
+    }
+
+    $scope.info = function() {
+      return AlertMe.info('this is a info message');
+    }
+
+    $scope.success = function() {
+      return AlertMe.success('this is a success message');
+    }
+
+    $scope.warning = function() {
+      return AlertMe.warning('this is a warning message');
+    }
+
+    $scope.danger = function() {
+      return AlertMe.danger('this is a danger message');
+    }
+
+  })
 
 </script>
 </html>

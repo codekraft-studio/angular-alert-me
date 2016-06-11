@@ -1,4 +1,4 @@
-.tm-container { text-align: center; position: fixed; z-index: 10000; width: 100%; }
+.tm-container { text-align: center; position: fixed; z-index: 10000; width: 100%; /** Element positioning inside the document */ }
 .tm-container.top { top: 0; bottom: auto; }
 .tm-container.top .tm-nav { margin-top: 20px; }
 .tm-container.bottom { bottom: 0; top: auto; }
@@ -8,7 +8,9 @@
 .tm-container.right { right: 0; left: auto; }
 .tm-container.right .tm-nav { margin-right: 20px; text-align: right; left: inherit; right: 0; }
 .tm-container .tm-nav { display: inline-block; position: absolute; right: 0; left: 0; margin: 0 auto; padding: 0; list-style: none; }
-.tm-container .tm-list { list-style: none; }
+.tm-container .tm-list { list-style: none; transition-duration: 0.3s; transition-timing-function: ease; }
+.tm-container .tm-list.ng-enter-active { -webkit-animation: zoomIn 0.3s; animation: zoomIn 0.3s; }
+.tm-container .tm-list.ng-leave-active { -webkit-animation: slideOutRight 0.3s; animation: slideOutRight 0.3s; }
 .tm-container .tm-alert { display: inline-block; padding: 15px; margin-bottom: 10px; border: 1px solid transparent; border-radius: 4px; }
 .tm-container .tm-alert:hover .close { opacity: .6; }
 .tm-container .tm-alert.default { background-color: #eee; border-color: #DBDBDB; color: #6A6A6A; }
@@ -25,5 +27,14 @@
 .tm-container .tm-alert .content { padding-right: 5px; }
 .tm-container .tm-alert .count { font-weight: 600; float: left; padding-right: 5px; }
 .tm-container .tm-alert .close { float: right; font-size: 21px; font-weight: bold; line-height: 1; color: #000; text-shadow: 0 1px 0 #fff; opacity: .2; text-transform: lowercase; position: relative; top: -3px; cursor: pointer; }
+
+@-webkit-keyframes zoomIn { from { opacity: 0; -webkit-transform: scale3d(0.3, 0.3, 0.3); transform: scale3d(0.3, 0.3, 0.3); }
+  50% { opacity: 1; } }
+@keyframes zoomIn { from { opacity: 0; -webkit-transform: scale3d(0.3, 0.3, 0.3); transform: scale3d(0.3, 0.3, 0.3); }
+  50% { opacity: 1; } }
+@-webkit-keyframes slideOutRight { from { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+  to { visibility: hidden; -webkit-transform: translate3d(100%, 0, 0); transform: translate3d(100%, 0, 0); } }
+@keyframes slideOutRight { from { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+  to { visibility: hidden; -webkit-transform: translate3d(100%, 0, 0); transform: translate3d(100%, 0, 0); } }
 
 /*# sourceMappingURL=alert-me.css.map */
