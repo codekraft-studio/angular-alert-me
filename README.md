@@ -1,9 +1,9 @@
 # angular-alert-me
-##### a light module to help you create and manager alerts in your application
+#### a notification manager for angularjs with many options
 
-## [DEMO](http://www.codekraft.it/demos/angular-alert-me/)
+### [DEMO](http://www.codekraft.it/demos/angular-alert-me/)
 
-## Getting started
+### Getting started
 Download the module using npm:
 ```bash
 npm install angular-alert-me
@@ -19,31 +19,33 @@ Add module name to your application dependencies:
 ```javascript
 angular.module('app', ['alert-me']);
 ```
-And then, __optionally__, you can place the __<alert-me>__ directive wherever you want inside the body tag.
+And then place the __<alert-me>__ directive wherever you want inside the body tag.
 ```html
 <body>
   <alert-me></alert-me>
 </body>
 ```
-The module by default will check if you forget, and add it, it in order to properly work.
+In any case the module run function will check if you forget, and add it, it in order to properly work.
 
-__That's it__ now you can inject anywhere in your app the __AlertMe__ service in order to manage the alerts.
+__That's it__ now you can inject anywhere in your app controllers or something.. the __AlertMe__ service in order to manage the alerts.
 
 ---
-## How to use it:
-Let's start by creating a simple default alert message using the __create__ method, the method will return the ID of the message just created:
+
+### How to use it
+Let's start by creating a simple default alert message using the __create__ function, this method will return the ID of the message just created:
 
 ```javascript
 angular.module('app')
   .controller('MainCtrl', function(AlertMe) {
-
     var myAlert = AlertMe.create('a simple alert');
     console.log(myAlert);
-  })
+  });
 ```
+You can use the **create** function in two ways: 
+* Passing a string will output the default alert message with the string you passed as content.
+* Passing a object with the attributes you want to override to customize the alert message appearance and beaviour, the mandatory property is **content** with is the message of the alert.
 
-By default the message class is **default**, but you can create a fully custom alert passing a object to the __create__ method, that will override the default options for that alert.
-There is a list of supported class that comes with the style, but you can use your personal too.
+The default alert class is **default**, (not so fantasy) but you can create a fully customized alert your custom classes and doing your own style.
 
 ```javascript
 var msg = {
@@ -116,22 +118,33 @@ See the examples section for more details about them.
 
 ---
 
-## Examples:
-### maxNum:
+### Message settings
+The message settings are extra settings per message that can be passed as arguments or in the object in the __create__ function. All the default settings listed above will be merged with the settings you pass to each message.
+* __title__: the alert box title
+* __content__: the alert box message (mandatory)
+* __onBeforeCreate__: you can perform you logic for every single alert or alter configuration
+
+---
+
+### Usage examples
+
+Set the max alert number to 10:
 ```javascript
 // Set the max alert number to 10:
 AlertMe.configure({
   maxNum: 10
-})
+});
 ```
-### dismissButton:
+
+Show he dismiss button for all the alerts:
 ```javascript
 // Show he dismiss button for all the alerts:
 AlertMe.configure({
   dismissButton: true
-})
+});
 ```
-### onBeforeCreate:
+
+Don't show certain class of alerts
 ```javascript
 // Example:
 // Don't show certain class of alerts
@@ -147,5 +160,26 @@ AlertMe.configure({
     }
 
   }
-})
+});
+```
+
+Error message with status code and text (assuming exist error object)
+```javascript
+// Error message with status code and text
+AlertMe.create({
+  className: 'error',
+  title: error.status,
+  content: error.statusText
+});
+```
+
+Do a fixed alert that can't be closed
+```javascript
+// Do a fixed alert that can't be closed
+AlertMe.create({
+  content: 'This is very important.',
+  dismissButton: false,
+  dismissOnClick: false,
+  dismissTimeout: false
+});
 ```
