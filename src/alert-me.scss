@@ -1,239 +1,229 @@
-.tm-container {
+$notify-container-margin: 20px;
+$notify-padding: 10px;
+$notify-alert-padding: 20px;
 
-  text-align: center;
-  position: fixed;
-  z-index: 10000;
-  width: 100%;
+// The alert primary colors
+$notify-info-color: #31708f;
+$notify-success-color: #3c763d;
+$notify-warning-color: #8a6d3b;
+$notify-danger-color: #a94442;
 
-/**
- * Element positioning
- * inside the document
- */
-  &.top{
-    top: 0;
-    bottom: auto;
+// The alert background colors
+$notify-info-bgcolor: #31708f;
+$notify-success-bgcolor: #3c763d;
+$notify-warning-bgcolor: #8a6d3b;
+$notify-danger-bgcolor: #a94442;
 
-    .tm-nav {
-      margin-top: 20px;
+.notify-container {
+
+    text-align: center;
+    position: fixed;
+    z-index: 10000;
+    width: 100%;
+
+
+    &.top{
+        top: 0;
+        bottom: auto;
+        .notify-nav { margin-top: $notify-container-margin; }
     }
 
-  }
-
-  &.bottom{
-    bottom: 0;
-    top: auto;
-
-    .tm-nav {
-      margin-bottom: 20px;
-      bottom: 0;
-      top: auto;
+    &.bottom{
+        bottom: 0;
+        top: auto;
+        .notify-nav {
+            margin-bottom: $notify-container-margin;
+            bottom: 0;
+            top: auto;
+        }
     }
 
-  }
-
-  &.left{
-    left: 0;
-    right: auto;
-
-    .tm-nav {
-      margin-left: 20px;
-      text-align: left;
-
-      left: 0;
-      right: inherit;
+    &.left{
+        left: 0;
+        right: auto;
+        text-align: left;
+        .notify-nav {
+            margin-left: $notify-container-margin;
+            left: 0;
+            right: inherit;
+        }
     }
 
-  }
+    &.right{
+        right: 0;
+        left: auto;
+        text-align: right;
 
-  &.right{
-    right: 0;
-    left: auto;
-
-    .tm-nav {
-      margin-right: 20px;
-      text-align: right;
-
-      left: inherit;
-      right: 0;
-    }
-
-  }
-
-  // child classes
-  .tm-nav{
-    display: inline-block;
-    position: absolute;
-    right: 0;
-    left: 0;
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
-  }
-
-  .tm-list {
-
-    list-style: none;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-
-    &.ng-enter-active {
-      -webkit-animation: zoomIn 0.3s;
-      animation: zoomIn 0.3s;
-    }
-
-    &.ng-leave-active {
-      -webkit-animation: slideOutRight 0.3s;
-      animation: slideOutRight 0.3s;
-    }
-
-  }
-
-  // the alert element
-  .tm-alert{
-
-    display: inline-block;
-    padding: 15px;
-    margin-bottom: 10px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-
-    &:hover .close {
-      opacity: .6;
-    }
-
-    &.default {
-      background-color: #eee;
-      border-color: #DBDBDB;
-      color: #6A6A6A;
-
-      .close {
-        color: #6A6A6A;
-      }
+        .notify-nav {
+            margin-right: $notify-container-margin;
+            left: inherit;
+            right: 0;
+        }
 
     }
 
-    &.success {
-      color: #3c763d;
-      background-color: #dff0d8;
-      border-color: #d6e9c6;
+    // child classes
+    .notify-nav{
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        padding: 0;
+        list-style: none;
+    }
 
-      .close {
-        color: #3c763d;
-      }
+    // the notify single list element
+    .notify-list {
+
+        list-style: none;
+        transition-duration: 0.3s;
+        transition-timing-function: ease;
+        margin-bottom: 10px;
+        cursor: pointer;
+
+        // on enter animation
+        &.ng-enter-active {
+            -webkit-animation: zoomIn 0.3s;
+            animation: zoomIn 0.3s;
+        }
+
+        // on leave animation
+        &.ng-leave-active {
+            -webkit-animation: slideOutRight 0.3s;
+            animation: slideOutRight 0.3s;
+        }
 
     }
 
-    &.info {
-      color: #31708f;
-      background-color: #d9edf7;
-      border-color: #bce8f1;
+    // the alert element
+    .notify-alert{
 
-      .close {
-        color: #31708f;
-      }
+        display: inline-block;
+        padding: $notify-alert-padding;
+        border: 1px solid transparent;
+        border-radius: 4px;
+
+
+
+        &.default {
+            background-color: #eee;
+            border-color: #DBDBDB;
+            color: #6A6A6A;
+            .close { color: #6A6A6A; }
+        }
+
+        &.success {
+            color: $notify-success-color;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+            a { color: $notify-success-color; }
+            .close { color: $notify-success-color; }
+        }
+
+        &.info {
+            color: $notify-info-color;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+            a { color: $notify-info-color; }
+            .close { color: $notify-info-color; }
+        }
+
+        &.warning {
+            color: #8a6d3b;
+            background-color: #fcf8e3;
+            border-color: #faebcc;
+
+            .close {
+                color: #8a6d3b;
+            }
+
+        }
+
+        &.danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+            .close { color: #a94442; }
+        }
+
+        .title {
+            font-weight: 600;
+            padding-right: 5px;
+        }
+
+        // the alert text content
+        .content { }
+
+        .count {
+            font-weight: 600;
+            float: left;
+            padding-right: 5px;
+        }
+
+        .close {
+            opacity: .6;
+            position: relative;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        &:hover .close {
+            opacity: 1;
+            font-weight: 500;
+        }
 
     }
-
-    &.warning {
-      color: #8a6d3b;
-      background-color: #fcf8e3;
-      border-color: #faebcc;
-
-      .close {
-        color: #8a6d3b;
-      }
-
-    }
-
-    &.danger {
-      color: #a94442;
-      background-color: #f2dede;
-      border-color: #ebccd1;
-      .close {
-        color: #a94442;
-      }
-    }
-
-    .title {
-      font-weight: 600;
-      padding-right: 5px;
-    }
-
-    .content {
-      padding-right: 5px;
-    }
-
-    .count {
-      font-weight: 600;
-      float: left;
-      padding-right: 5px;
-    }
-
-    .close {
-      float: right;
-      font-size: 21px;
-      font-weight: bold;
-      line-height: 1;
-      color: #000;
-      text-shadow: 0 1px 0 #fff;
-      opacity: .2;
-      text-transform: lowercase;
-      position: relative;
-      top: -3px;
-      cursor: pointer;
-    }
-
-  }
 
 }
 
 
 @-webkit-keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(.3, .3, .3);
-    transform: scale3d(.3, .3, .3);
-  }
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(.3, .3, .3);
+        transform: scale3d(.3, .3, .3);
+    }
 
-  50% {
-    opacity: 1;
-  }
+    50% {
+        opacity: 1;
+    }
 }
 
 @keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(.3, .3, .3);
-    transform: scale3d(.3, .3, .3);
-  }
+    from {
+        opacity: 0;
+        -webkit-transform: scale3d(.3, .3, .3);
+        transform: scale3d(.3, .3, .3);
+    }
 
-  50% {
-    opacity: 1;
-  }
+    50% {
+        opacity: 1;
+    }
 }
 
 @-webkit-keyframes slideOutRight {
-  from {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
+    from {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
 
-  to {
-    visibility: hidden;
-    -webkit-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-  }
+    to {
+        visibility: hidden;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
 }
 
 @keyframes slideOutRight {
-  from {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
+    from {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
 
-  to {
-    visibility: hidden;
-    -webkit-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-  }
+    to {
+        visibility: hidden;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0);
+    }
 }

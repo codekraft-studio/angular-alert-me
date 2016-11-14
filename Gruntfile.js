@@ -1,59 +1,68 @@
 module.exports = function(grunt) {
 
-  grunt.initConfig({
+    grunt.initConfig({
 
-    pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON('package.json'),
 
-    watch: {
-
-      scripts: {
-        files: ['src/*.js'],
-        tasks: ['concat', 'uglify']
-      },
-      css: {
-        files: ['src/*.scss'],
-        tasks: ['sass']
-      }
-
-    },
-
-    concat: {
-      dist: {
-        src: ['src/alert-me.module.js', 'src/alert-me*.js'],
-        dest: 'dist/alert-me.js',
-      }
-    },
-
-    uglify: {
-      options: { mangle: false },
-      my_target: {
-        files: {
-          'dist/alert-me.min.js': ['dist/alert-me.js']
-        }
-      }
-    },
-
-    sass: {
-      dist: {
-        options: {
-          style: 'compact'
+        concat: {
+            dist: {
+                src: ['src/alert-me.module.js', 'src/alert-me.*.js'],
+                dest: 'dist/alert-me.js',
+            }
         },
-        files: {
-          'dist/alert-me.css': 'src/alert-me.scss'
+
+        uglify: {
+            options: { mangle: false },
+            my_target: {
+                files: {
+                    'dist/alert-me.min.js': ['dist/alert-me.js']
+                }
+            }
+        },
+
+        sass: {
+            dist: {
+                options: {
+                    style: 'compact'
+                },
+                files: {
+                    'dist/alert-me.css': 'src/alert-me.scss'
+                }
+            }
+        },
+
+        watch: {
+
+            scripts: {
+                files: ['src/**/*.js'],
+                tasks: ['concat', 'uglify'],
+                options: {
+                  spawn: false,
+                  interrupt: true
+                }
+            },
+            css: {
+                files: ['src/**/*.scss'],
+                tasks: ['sass'],
+                options: {
+                  spawn: false,
+                  interrupt: true
+                }
+            }
+
         }
-      }
-    }
 
-  });
+    });
 
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
-  // default task
-  grunt.registerTask('default', ['watch']);
+    // default task
+    grunt.registerTask('default', ['watch']);
 
-  // build task (no watch)
-  grunt.registerTask('build', ['concat', 'uglify']);
+    // build task (no watch)
+    grunt.registerTask('build', ['concat', 'uglify']);
+
 };

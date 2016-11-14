@@ -1,135 +1,118 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-  <meta charset="utf-8">
-  <title>AlertMe Angular Module - codekraft-studio</title>
-  <meta name="author" content="codekraft-studio">
-  <meta name="description" content="Expect us, we are coming, the new full qualified web developers duo.">
-	<meta name="Robots" content="ALL,INDEX">
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta property="og:title" content="codekraft-studio, cutting edge programming!" />
-	<meta property="og:description" content="Expect us, we are coming, the new full qualified web developers duo" />
-	<meta property="og:image" content="http://core.codekraft.it/www.codekraft.it/quadkode.jpg" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="http://www.codekraft.it/" />
-	<meta property="og:site_name" content="codekraft-studio, cutting edge programming!" />
-  <link rel="stylesheet" href="../dist/alert-me.css">
-  <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+    <meta charset="utf-8">
+    <title>AlertMe Angular Module - codekraft-studio</title>
+    <meta name="author" content="codekraft-studio">
+    <meta name="description" content="Expect us, we are coming, the new full qualified web developers duo.">
+    <meta name="Robots" content="ALL,INDEX">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta property="og:title" content="codekraft-studio, cutting edge programming!" />
+    <meta property="og:description" content="Expect us, we are coming, the new full qualified web developers duo" />
+    <meta property="og:image" content="http://core.codekraft.it/www.codekraft.it/quadkode.jpg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.codekraft.it/" />
+    <meta property="og:site_name" content="codekraft-studio, cutting edge programming!" />
+    <link rel="stylesheet" href="../dist/alert-me.css">
+    <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body ng-controller="MainCtrl">
 
-  <article role="main">
+    <article role="main">
 
-    <header>
-      <div class="hcont">
-        <h1>angular-alert-me</h1>
-        <h2>a light module for manage alerts on your applications</h2>
-      </div>
-      <a href="https://github.com/codekraft-studio"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
-    </header>
+        <header>
+            <div class="hcont">
+                <h1>angular-alert-me</h1>
+                <h2>a light module for manage alerts on your applications</h2>
+            </div>
+            <a href="https://github.com/codekraft-studio"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+        </header>
 
-    <section>
+        <section>
 
-      <div class="hcont">
+            <div class="section-container">
 
-        <h5>Basic alert:</h5>
+                <h3>Basic alert:</h3>
 
-        <p>
-          Try to write an alert with some custom text, by default the alerts will dimiss automatically after a timeout that you can always customize.
-        </p>
+                <p>The very basic way to use it.</p>
 
-        <form name="myForm" class="form-inline" ng-submit="basicAlert(input)">
-          <div class="form-group">
-            <input type="text" class="form-control input-lg" ng-model="input" required>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-default btn-lg" ng-disabled="myForm.$invalid">Send</button>
-          </div>
-        </form>
+                <form name="myForm" class="form-inline">
 
-        <h5>Preset alert methods:</h5>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg" ng-model="input" placeholder="enter some content" required>
+                        <button type="submit" ng-click="basicAlert(input)" class="btn btn-default btn-lg" ng-disabled="myForm.$invalid">DEFAULT</button>
+                        <button type="submit" ng-click="doCustom(input)" class="btn btn-default btn-lg" ng-disabled="myForm.$invalid">CUSTOM</button>
+                    </div>
 
-        <p>
-          Four different common alerts quick call methods.
-        </p>
+                </form>
 
-        <div class="btn-group">
-          <button type="button" class="btn btn-info" ng-click="info()">Info</button>
-          <button type="button" class="btn btn-success" ng-click="success()">Success</button>
-          <button type="button" class="btn btn-warning" ng-click="warning()">Warning</button>
-          <button type="button" class="btn btn-danger" ng-click="danger()">Danger</button>
-        </div>
+            </div>
 
-        <h5>Custom class alert:</h5>
+            <div class="section-container">
 
-        <p>
-          You can also create a custom alert by specifing the class you want.
-        </p>
+                <h3>With custom HTML content:</h3>
 
-        <form name="otherForm" class="form-inline" ng-submit="doCustom(customAlert)">
-          <div class="form-group">
-            <input type="text" class="form-control input-lg" ng-model="customAlert" required>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-default btn-lg" ng-disabled="otherForm.$invalid">Send</button>
-          </div>
-        </form>
+                <form name="myHTMLForm" class="form-inline" ng-submit="randomHTML(richInput)">
 
-        <h5>Alert with HTML content:</h5>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg" ng-model="richInput" placeholder="<b>Hello there</b> how are you?" required>
+                        <button type="submit" class="btn btn-default btn-lg" ng-disabled="myHTMLForm.$invalid">Send</button>
+                    </div>
 
-        <p>
-          You can insert a HTML message for your alert content by specifing the <b>isTrustedHtml</b> addribute.
-          <br>The attribute will enable the directive to threat the given text as HTML.
-        </p>
+                </form>
 
-        <form name="myHTMLForm" class="form-inline" ng-submit="randomHTML(richInput)">
+                <p>You can also use HTML markup to enhance our alerts!</p>
+                <p>Remember to specify <b>isTrustedHtml</b> option to enable parsing.</p>
 
-          <div class="form-group">
-            <input type="text" class="form-control input-lg" ng-model="richInput" required>
-          </div>
+            </div>
 
-          <div class="form-group">
-            <button type="submit" class="btn btn-default btn-lg" ng-disabled="myHTMLForm.$invalid">Send</button>
-          </div>
+            <div class="section-container">
 
-        </form>
+                <h3>Preset alert methods:</h3>
 
-        <h5>Using a promise as alert timeout:</h5>
+                <p>It comes with four different preset methods.</p>
 
-        <p>
-          You can also use a real http request as dismiss timing for your alert, passing a promise to <b>resolve</b> attribute in the same way you will <!DOCTYPE html>
-          <br>on angular routing system in resolve method. Try the button below to see it in action.
-        </p>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info" ng-click="info()">Info</button>
+                    <button type="button" class="btn btn-success" ng-click="success()">Success</button>
+                    <button type="button" class="btn btn-warning" ng-click="warning()">Warning</button>
+                    <button type="button" class="btn btn-danger" ng-click="danger()">Danger</button>
+                </div>
 
-        <button type="button" class="btn btn-default btn-large" ng-click="getRepos()">
-          Fetch some data
-        </button>
+            </div>
 
-      </div>
+            <div class="section-container">
 
-      <div class="hcont">
+                <h3>With ajax promises:</h3>
 
-        <div ng-show="reposList.length" ng-cloak>
+                <p>You can do an alert based on a Ajax Request and auto-hide it when it's done!</p>
 
-          <h5>Check out also, our other repositories!</h5>
+                <button type="button" class="btn btn-default btn-large" ng-click="getRepos()">
+                    Call the API
+                </button>
 
-          <ul class="repo-response">
-            <li class="repo-item" ng-repeat="repo in reposList">
-              <a ng-href="{{repo.url}}">
-                <span class="repo-heading" ng-bind="repo.name"></span>
-                <span class="repo-text" ng-bind="repo.description"></span>
-              </a>
-            </li>
-          </ul>
+                <div id="results" ng-show="reposList.length" ng-cloak>
 
-        </div>
+                    <h3>Check out also, our other repositories!</h3>
 
-      </div>
+                    <ul class="repo-response">
+                        <li class="repo-item" ng-repeat="repo in reposList">
+                            <a ng-href="{{repo.url}}">
+                                <span class="repo-heading" ng-bind="repo.name"></span>
+                                <span class="repo-text" ng-bind="repo.description"></span>
+                            </a>
+                        </li>
+                    </ul>
 
-    </section>
+                </div>
 
-  </article>
+            </div>
+
+        </section>
+
+    </article>
 
 </body>
 
@@ -138,145 +121,124 @@
 <script src="../dist/alert-me.js"></script>
 <script>
 
-  angular.module('app', [
-    'alert-me',
-    'ngAnimate'
-  ])
+    angular.module('app', [
+        'alert-me',
+        'ngAnimate'
+    ])
 
-  .config(function(AlertProvider) {
+    .config(function(AlertProvider) {
 
-    // configure the global module options
-    AlertProvider.configure({
-      verticalPosition: 'bottom',
-      className: 'default',
-      dismissOnTimeout: true,
-      dismissOnClick: true,
-      dismissButton: true,
-      onBeforeCreate: function(conf) {
-        return true;
-      }
+        // configure the global module options
+        AlertProvider.configure({
+            verticalPosition: 'top',
+            className: 'default',
+            dismissOnTimeout: true,
+            dismissOnClick: true,
+            dismissButton: true
+        });
+
+    })
+
+    .controller('MainCtrl', function($scope,$q,$timeout,$http,AlertMe,$location,$anchorScroll){
+
+        // default classes used in module
+        var classes = ['info','success','warning','danger'];
+
+        // init the first alerts
+        $timeout(function () {
+
+            // introduction
+            var introToast = AlertMe.info({
+                title: 'AlertMe:',
+                content: 'made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://github.com/codekraft-studio" target="_blank">codekraft-studio</a>',
+                isTrustedHtml: true,
+                dismissButton: false,
+                dismissOnTimeout: false,
+                dismissOnClick: false
+            });
+
+            console.log("Alert created:", introToast);
+
+        }, 1000);
+
+        // run http request
+        $scope.getRepos = function() {
+
+            var msg = {
+                title: 'gitHub:',
+                content: 'download in progress..',
+                className: 'warning',
+                dismissButton: false,
+                resolve: function() {
+
+                    var deferred = $q.defer()
+
+                    $timeout(function() {
+
+                        $http.get('https://api.github.com/users/codekraft-studio/repos')
+                        .success(function(response) {
+                            $scope.reposList = response;
+                            deferred.resolve();
+                            $location.hash('results');
+                            $anchorScroll();
+                        });
+
+                    }, 1000)
+
+                    return deferred.promise;
+                }
+            }
+
+            AlertMe.create(msg);
+        }
+
+        // create custom alert
+        $scope.doCustom = function(text) {
+
+            var msg = {
+                title: 'Custom:',
+                content: text,
+                className: 'dark-alert'
+            }
+
+            return AlertMe.create(msg);
+
+        }
+
+        // random class message
+        $scope.basicAlert = function(text) {
+            return AlertMe.create(text);
+        }
+
+        // random class message
+        $scope.randomHTML = function(text) {
+
+            var msg = {
+                content: text,
+                isTrustedHtml: true,
+                className: classes[ Math.floor(Math.random()*classes.length) ]
+            }
+
+            return AlertMe.create(msg);
+        }
+
+        $scope.info = function() {
+            return AlertMe.info({title: 'Quick tip:', content: 'this is a info message'});
+        }
+
+        $scope.success = function() {
+            return AlertMe.success({title: 'Good job:', content: 'this is a success message'});
+        }
+
+        $scope.warning = function() {
+            return AlertMe.warning({title: 'Be careful:', content: 'this is a warning message'});
+        }
+
+        $scope.danger = function() {
+            return AlertMe.danger({title: 'Bad Error:', content: 'this is a danger message'});
+        }
+
     });
-
-  })
-
-  .controller('MainCtrl', function($scope,$q,$timeout,$http,$filter,AlertMe){
-
-    // default classes used in module
-    var classes = ['info','success','warning','danger'];
-
-    // introduction
-    var introToast = AlertMe.create({
-      title: 'AlertMe:',
-      className: 'info',
-      content: 'a easy alert manager from <a href="https://github.com/codekraft-studio" target="_blank">codekraft-studio</a>',
-      isTrustedHtml: true,
-      dismissButton: true,
-      dismissOnTimeout: false,
-      dismissOnClick: false
-    })
-
-    console.log("Alert created:", introToast);
-
-    // danger sample
-    var dangerToast = AlertMe.create({
-      title: 'Callback:',
-      content: 'a simple callback example',
-      className: 'danger',
-      dismissOnClick: true,
-      dismissOnTimeout: false,
-      onDismiss: function(msg) {
-        alert('hallo, my callback!')
-      }
-    })
-
-    console.log("Alert created:", dangerToast);
-
-    // run http request
-    $scope.getRepos = function() {
-
-      var msg = {
-        title: 'gitHub:',
-        content: 'download in progress..',
-        className: 'warning',
-        dismissButton: false,
-        resolve: function() {
-
-          var deferred = $q.defer()
-
-          $timeout(function() {
-
-            $http.get('https://api.github.com/users/codekraft-studio/repos')
-            .success(function(response) {
-              $scope.reposList = response;
-              deferred.resolve()
-            })
-
-          }, 1000)
-
-          return deferred.promise;
-        }
-      }
-
-      AlertMe.create(msg);
-    }
-
-    // create custom class alert
-    $scope.doCustom = function(text) {
-
-      var msg = {
-        title: 'Custom:',
-        content: text,
-        className: 'dark-alert',
-        dismissOnTimeout: true,
-        dismissButton: false
-      }
-
-      return AlertMe.create(msg);
-    }
-
-    // random class message
-    $scope.basicAlert = function(text) {
-
-      var msg = {
-        content: text,
-        dismissOnTimeout: true,
-        onAfterCreate: function() {
-          $scope.input = '';
-        }
-      }
-
-      return AlertMe.create(msg);
-    }
-
-    // random class message
-    $scope.randomHTML = function(text) {
-
-      var msg = {
-        content: text,
-        isTrustedHtml: true,
-        className: classes[ Math.floor(Math.random()*classes.length) ]
-      }
-
-      return AlertMe.create(msg);
-    }
-
-    $scope.info = function() {
-      return AlertMe.info('this is a info message');
-    }
-
-    $scope.success = function() {
-      return AlertMe.success('this is a success message');
-    }
-
-    $scope.warning = function() {
-      return AlertMe.warning('this is a warning message');
-    }
-
-    $scope.danger = function() {
-      return AlertMe.danger('this is a danger message');
-    }
-
-  })
 
 </script>
 </html>
