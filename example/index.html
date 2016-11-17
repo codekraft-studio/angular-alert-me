@@ -85,6 +85,20 @@
 
             <div class="section-container">
 
+                <h3>HTTP Interceptor</h3>
+
+                <p>You can activate the HttpInterceptor on config method by adding:</p>
+
+                <code>$httpProvider.interceptors.push('alertInterceptor');</code>
+
+                <p>And on <b>RequestError</b> and <b>ResponseError</b> it will show the alert.</p>
+                <button type="button" class="btn btn-default" ng-click="doBadRequest()">Bad Request</button>
+                <button type="button" class="btn btn-default" ng-click="doBadResponse()">Bad Response</button>
+
+            </div>
+
+            <div class="section-container">
+
                 <h3>With ajax promises:</h3>
 
                 <p>You can do an alert based on a Ajax Request and auto-hide it when it's done!</p>
@@ -126,7 +140,7 @@
         'ngAnimate'
     ])
 
-    .config(function(AlertProvider) {
+    .config(function(AlertProvider, $httpProvider) {
 
         // configure the global module options
         AlertProvider.configure({
@@ -136,6 +150,8 @@
             dismissOnClick: true,
             dismissButton: true
         });
+
+        $httpProvider.interceptors.push('alertInterceptor');
 
     })
 
@@ -160,6 +176,19 @@
             console.log("Alert created:", introToast);
 
         }, 1000);
+
+        $scope.doBadRequest = function() {
+
+            return $http({
+                method: 'BAD',
+                url: 'https://core.codekraft.it'
+            });
+
+        }
+
+        $scope.doBadResponse = function() {
+            return $http.get('https://core.codekraft.it/unexisting');
+        }
 
         // run http request
         $scope.getRepos = function() {
