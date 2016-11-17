@@ -22,7 +22,7 @@ angular.module('app', ['alert-me']);
 And then place the __<alert-me>__ directive wherever you want inside the body tag.
 ```html
 <body>
-  <alert-me></alert-me>
+    <alert-me></alert-me>
 </body>
 ```
 In any case the module run function will check if you forget, and add it, it in order to properly work.
@@ -36,12 +36,12 @@ Let's start by creating a simple default alert message using the __create__ func
 
 ```javascript
 angular.module('app')
-  .controller('MainCtrl', function(AlertMe) {
+.controller('MainCtrl', function(AlertMe) {
     var myAlert = AlertMe.create('a simple alert');
     console.log(myAlert);
-  });
+});
 ```
-You can use the **create** function in two ways: 
+You can use the **create** function in two ways:
 * Passing a string will output the default alert message with the string you passed as content.
 * Passing a object with the attributes you want to override to customize the alert message appearance and beaviour, the mandatory property is **content** with is the message of the alert.
 
@@ -49,8 +49,8 @@ The default alert class is **default**, (not so fantasy) but you can create a fu
 
 ```javascript
 var msg = {
-  content: 'a custom alert',
-  className: 'my-class'
+    content: 'a custom alert',
+    className: 'my-class'
 }
 
 AlertMe.create(msg);
@@ -60,26 +60,26 @@ You can override the module defaults settings using __configure__ method inside 
 
 ```javascript
 angular.module('app')
-  .config(function(AlertProvider) {
+.config(function(AlertProvider) {
 
     AlertProvider.configure({
-      className: 'success' // this will be the default class if nothing is passed,
-      onBeforeCreate: function(conf) {
-        // do some checks
-      }
+        className: 'success' // this will be the default class if nothing is passed,
+        onBeforeCreate: function(conf) {
+            // do some checks
+        }
     })
 
-  })
+})
 ```
 
 But you can always set override the properties per message passing a object to the __create__ method, like in this example:
 
 ```javascript
 var msg = {
-  content: 'another custom alert!',
-  className: 'different',
-  dismissOnClick: true, // by clicking it will dismiss the alert
-  onDismiss: myCallBack // the callback to run when the alert is dismissed
+    content: 'another custom alert!',
+    className: 'different',
+    dismissOnClick: true, // by clicking it will dismiss the alert
+    onDismiss: myCallBack // the callback to run when the alert is dismissed
 }
 
 function myCallback() { ... }
@@ -90,11 +90,22 @@ AlertMe.create(msg);
 You can also use html text as content for your alerts, but be sure to add the __isTrustedHtml__ flag property to your settings or to the message you want to be threated as html, like so:
 ```javascript
 var msg = {
-  content: 'visit our <a href="#!">page</a> on github',
-  isTrustedHtml: true // this will threat the content as html text
+    content: 'visit our <a href="#!">page</a> on github',
+    isTrustedHtml: true // this will threat the content as html text
 }
 
 ```
+
+---
+
+### Methods
+To all the methods listed below you can pass both a `string` or a `object`.
+* __create__; The main method for creating alerts
+* __info__; This method will call create with default class 'info'
+* __success__; This method will call create with default class 'success'
+* __warning__; This method will call create with default class 'warning'
+* __danger__; This method will call create with default class 'danger'
+
 ---
 
 ## Configurable settings:
@@ -132,7 +143,7 @@ Set the max alert number to 10:
 ```javascript
 // Set the max alert number to 10:
 AlertMe.configure({
-  maxNum: 10
+    maxNum: 10
 });
 ```
 
@@ -140,7 +151,7 @@ Show he dismiss button for all the alerts:
 ```javascript
 // Show he dismiss button for all the alerts:
 AlertMe.configure({
-  dismissButton: true
+    dismissButton: true
 });
 ```
 
@@ -149,17 +160,17 @@ Don't show certain class of alerts
 // Example:
 // Don't show certain class of alerts
 AlertMe.configure({
-  onBeforeCreate: function(msg) {
+    onBeforeCreate: function(msg) {
 
-    // assume that user want
-    // to disable all info alerts
-    if( msg.className == 'info' && userDisabledInfos ) {
+        // assume that user want
+        // to disable all info alerts
+        if( msg.className == 'info' && userDisabledInfos ) {
 
-      // this will prevent the alert from being created
-      return false;
+            // this will prevent the alert from being created
+            return false;
+        }
+
     }
-
-  }
 });
 ```
 
@@ -167,9 +178,9 @@ Error message with status code and text (assuming exist error object)
 ```javascript
 // Error message with status code and text
 AlertMe.create({
-  className: 'error',
-  title: error.status,
-  content: error.statusText
+    className: 'error',
+    title: error.status,
+    content: error.statusText
 });
 ```
 
@@ -177,9 +188,9 @@ Do a fixed alert that can't be closed
 ```javascript
 // Do a fixed alert that can't be closed
 AlertMe.create({
-  content: 'This is very important.',
-  dismissButton: false,
-  dismissOnClick: false,
-  dismissTimeout: false
+    content: 'This is very important.',
+    dismissButton: false,
+    dismissOnClick: false,
+    dismissTimeout: false
 });
 ```
