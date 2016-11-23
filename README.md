@@ -96,6 +96,20 @@ var msg = {
 
 ```
 
+Also you can specify to use the default __interceptor__ to notify all the HTTP request and responses errors.
+```javascript
+angular.module('app')
+.config(function($httpProvider) {
+    $httpProvider.interceptors.push('alertInterceptor');
+});
+```
+But you can always disable notifications for particular HTTP calls by setting the __notifyError__ configuration option to __false__.
+```javascript
+$http({url: '/api/something', notifyError: false});
+$http.get('/api/something', {notifyError: false});
+$http.post('/api/something', data, {notifyError: false});
+```
+
 ---
 
 ### Methods
