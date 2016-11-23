@@ -309,6 +309,10 @@ angular.module('alert-me')
 
 		'requestError': function (rejection) {
 
+			if( !rejection.config.notifyError ) {
+				return;
+			}
+
 			AlertMe.warning({
 				title: rejection.status,
 				content: rejection.statusText,
@@ -319,6 +323,10 @@ angular.module('alert-me')
 		},
 
 		'responseError': function (rejection) {
+
+			if( !rejection.config.notifyError ) {
+				return;
+			}
 
 			AlertMe.warning({
 				title: rejection.status,
