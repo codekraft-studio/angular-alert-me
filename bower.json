@@ -1,0 +1,23 @@
+{
+  "name": "angular-alert-me",
+  "description": "a light module to help you create and manager alerts in your applications",
+  "main": "./dist/alert-me.js",
+  "authors": [
+    "codekraft-studio"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "angularjs",
+    "alert",
+    "notifications",
+    "toast"
+  ],
+  "homepage": "https://github.com/codekraft-studio/angular-alert-me",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
