@@ -3,7 +3,7 @@
   "description": "a light module to help you create and manager alerts in your applications",
   "main": [
     "./dist/alert-me.css",
-    "./dist/alert-me.min.js"
+    "./dist/alert-me.js"
   ],
   "authors": [
     "codekraft-studio"
