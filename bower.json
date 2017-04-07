@@ -1,7 +1,10 @@
 {
   "name": "angular-alert-me",
   "description": "a light module to help you create and manager alerts in your applications",
-  "main": "./dist/alert-me.js",
+  "main": [
+    "./dist/alert-me.css",
+    "./dist/alert-me.min.js"
+  ],
   "authors": [
     "codekraft-studio"
   ],
