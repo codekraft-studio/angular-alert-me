@@ -1,7 +1,7 @@
 {
   "name": "angular-alert-me",
-  "version": "1.0.5",
-  "description": "a light module to help you create and manager alerts in your applications",
+  "version": "1.1.0",
+  "description": "Simple but fancy and light module to help you create and manager notifications with Angular.",
   "main": "Gruntfile.js",
   "directories": {
     "example": "example"
