@@ -1,36 +1,41 @@
 $notify-container-margin: 20px;
 $notify-padding: 10px;
-$notify-alert-padding: 20px;
+$notify-message-inner-padding: 20px; // The alert primary colors
 
-// The alert primary colors
+$default-color: #6A6A6A;
+$default-border-color: #DBDBDB;
+$default-background-color: #eee;
+
 $notify-info-color: #31708f;
 $notify-success-color: #3c763d;
 $notify-warning-color: #8a6d3b;
-$notify-danger-color: #a94442;
-
-// The alert background colors
+$notify-danger-color: #a94442; // The alert background colors
 $notify-info-bgcolor: #31708f;
 $notify-success-bgcolor: #3c763d;
 $notify-warning-bgcolor: #8a6d3b;
 $notify-danger-bgcolor: #a94442;
 
 .notify-container {
-
     text-align: center;
     position: fixed;
     z-index: 10000;
     width: 100%;
 
-
-    &.top{
+    // positioned at top
+    &.top {
         top: 0;
         bottom: auto;
-        .notify-nav { margin-top: $notify-container-margin; }
+
+        .notify-nav {
+            margin-top: $notify-container-margin;
+        }
     }
 
-    &.bottom{
+    // positioned at bottom
+    &.bottom {
         bottom: 0;
         top: auto;
+
         .notify-nav {
             margin-bottom: $notify-container-margin;
             bottom: 0;
@@ -38,32 +43,36 @@ $notify-danger-bgcolor: #a94442;
         }
     }
 
-    &.left{
+    &.left {
         left: 0;
         right: auto;
-        text-align: left;
+        text-align: right;
+
         .notify-nav {
             margin-left: $notify-container-margin;
             left: 0;
             right: inherit;
+            text-align: left;
+            .notify-message-inner { text-align: right; }
         }
     }
 
-    &.right{
+    &.right {
         right: 0;
         left: auto;
-        text-align: right;
+        text-align: left;
 
         .notify-nav {
             margin-right: $notify-container-margin;
             left: inherit;
             right: 0;
+            text-align: right;
+            .notify-message-inner { text-align: left; }
         }
-
     }
 
-    // child classes
-    .notify-nav{
+    // The element that holds all the notifications
+    .notify-nav {
         display: inline-block;
         position: absolute;
         right: 0;
@@ -73,62 +82,134 @@ $notify-danger-bgcolor: #a94442;
         list-style: none;
     }
 
-    // the notify single list element
-    .notify-list {
-
+    // The notification element
+    .notify-message {
         list-style: none;
         transition-duration: 0.3s;
         transition-timing-function: ease;
         margin-bottom: 10px;
         cursor: pointer;
-
         // on enter animation
         &.ng-enter-active {
             -webkit-animation: zoomIn 0.3s;
             animation: zoomIn 0.3s;
         }
-
         // on leave animation
         &.ng-leave-active {
             -webkit-animation: slideOutRight 0.3s;
             animation: slideOutRight 0.3s;
         }
-
     }
-
-    // the alert element
-    .notify-alert{
-
+    // The inner element
+    .notify-message-inner {
+        position: relative;
         display: inline-block;
-        padding: $notify-alert-padding;
         border: 1px solid transparent;
         border-radius: 4px;
-
-
-
-        &.default {
-            background-color: #eee;
-            border-color: #DBDBDB;
-            color: #6A6A6A;
-            .close { color: #6A6A6A; }
+        // Internal padding
+        & > div {
+            padding: $notify-message-inner-padding;
+            vertical-align: middle;
         }
 
+        &.dismissable {
+
+            .notify-content {
+                padding-right: 30px;
+            }
+
+        }
+
+        // The notification icon container
+        .notify-icon {
+            width: 64px;
+            height: 64px;
+            overflow: hidden;
+            display: inline-block;
+            background-color: rgba(238, 238, 238, 0.8);
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        // The notification actual text content container
+        .notify-content {
+            display: inline-block;
+            .notify-title {
+                font-weight: 600;
+                display: block;
+                font-size: 1.2em;
+            }
+            // the alert text content
+            .notify-message {
+                font-size: 1em;
+            }
+        }
+
+        .count {
+            font-weight: 600;
+            display: inline-block;
+            padding-right: 5px;
+        }
+
+        .close {
+            opacity: 0.6;
+            position: absolute;
+            cursor: pointer;
+            right: 10px;
+            top: 10px;
+            font-family: sans-serif;
+        }
+
+        &:hover .close {
+            opacity: 1;
+            font-weight: 500;
+        }
+
+        // Default notification style
+        &.default {
+            background-color: $default-background-color;
+            border-color: $default-border-color;
+            color: $default-color;
+
+            .close {
+                color: $default-color;
+            }
+        }
+
+        // Success notification style
         &.success {
             color: $notify-success-color;
             background-color: #dff0d8;
             border-color: #d6e9c6;
-            a { color: $notify-success-color; }
-            .close { color: $notify-success-color; }
+
+            a {
+                color: $notify-success-color;
+            }
+
+            .close {
+                color: $notify-success-color;
+            }
         }
 
+        // Info notification style
         &.info {
             color: $notify-info-color;
             background-color: #d9edf7;
             border-color: #bce8f1;
-            a { color: $notify-info-color; }
-            .close { color: $notify-info-color; }
+
+            a {
+                color: $notify-info-color;
+            }
+
+            .close {
+                color: $notify-info-color;
+            }
         }
 
+        // Warning notification style
         &.warning {
             color: #8a6d3b;
             background-color: #fcf8e3;
@@ -137,47 +218,21 @@ $notify-danger-bgcolor: #a94442;
             .close {
                 color: #8a6d3b;
             }
-
         }
 
+        // Danger notification style
         &.danger {
             color: #a94442;
             background-color: #f2dede;
             border-color: #ebccd1;
-            .close { color: #a94442; }
-        }
 
-        .title {
-            font-weight: 600;
-            padding-right: 5px;
-        }
-
-        // the alert text content
-        .content { }
-
-        .count {
-            font-weight: 600;
-            float: left;
-            padding-right: 5px;
-        }
-
-        .close {
-            opacity: .6;
-            position: relative;
-            cursor: pointer;
-            margin-left: 5px;
-        }
-
-        &:hover .close {
-            opacity: 1;
-            font-weight: 500;
+            .close {
+                color: #a94442;
+            }
         }
 
     }
-
 }
-
-
 @-webkit-keyframes zoomIn {
     from {
         opacity: 0;
@@ -189,7 +244,6 @@ $notify-danger-bgcolor: #a94442;
         opacity: 1;
     }
 }
-
 @keyframes zoomIn {
     from {
         opacity: 0;
@@ -201,7 +255,6 @@ $notify-danger-bgcolor: #a94442;
         opacity: 1;
     }
 }
-
 @-webkit-keyframes slideOutRight {
     from {
         -webkit-transform: translate3d(0, 0, 0);
@@ -214,7 +267,6 @@ $notify-danger-bgcolor: #a94442;
         transform: translate3d(100%, 0, 0);
     }
 }
-
 @keyframes slideOutRight {
     from {
         -webkit-transform: translate3d(0, 0, 0);

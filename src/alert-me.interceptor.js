@@ -34,6 +34,6 @@ angular.module('alert-me')
 
 		}
 
-	}
+	};
 
 });
