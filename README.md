@@ -19,26 +19,19 @@ Add module name to your application dependencies:
 ```javascript
 angular.module('app', ['alert-me']);
 ```
-And then place the __<alert-me>__ directive wherever you want inside the body tag.
-```html
-<body>
-    <alert-me></alert-me>
-</body>
-```
-In any case the module run function will check if you forget, and add it, it in order to properly work.
-
-__That's it__ now you can inject anywhere in your app controllers or something.. the __AlertMe__ service in order to manage the alerts.
+__That's it__ now you can inject anywhere in your app the __AlertMe__ service in order to manage the notifications.
 
 ---
 
 ### How to use it
-Let's start by creating a simple default alert message using the __create__ function, this method will return the ID of the message just created:
+Let's start by creating a simple default notification using the __create__ function, this method will return the message just created:
 
 ```javascript
 angular.module('app')
 .controller('MainCtrl', function(AlertMe) {
-    var myAlert = AlertMe.create('a simple alert');
-    console.log(myAlert);
+  AlertMe.create('a simple alert').then(function(message) {
+    console.log('Message created:', message);
+  });
 });
 ```
 You can use the **create** function in two ways:
@@ -49,8 +42,8 @@ The default alert class is **default**, (not so fantasy) but you can create a fu
 
 ```javascript
 var msg = {
-    content: 'a custom alert',
-    className: 'my-class'
+  content: 'a custom alert',
+  className: 'my-class'
 }
 
 AlertMe.create(msg);
@@ -62,12 +55,12 @@ You can override the module defaults settings using __configure__ method inside 
 angular.module('app')
 .config(function(AlertProvider) {
 
-    AlertProvider.configure({
-        className: 'success' // this will be the default class if nothing is passed,
-        onBeforeCreate: function(conf) {
-            // do some checks
-        }
-    })
+  AlertProvider.configure({
+    className: 'success' // this will be the default class if nothing is passed,
+    onBeforeCreate: function(conf) {
+      // do some checks
+    }
+  })
 
 })
 ```
@@ -76,10 +69,10 @@ But you can always set override the properties per message passing a object to t
 
 ```javascript
 var msg = {
-    content: 'another custom alert!',
-    className: 'different',
-    dismissOnClick: true, // by clicking it will dismiss the alert
-    onDismiss: myCallBack // the callback to run when the alert is dismissed
+  content: 'another custom alert!',
+  className: 'different',
+  dismissOnClick: true, // by clicking it will dismiss the alert
+  onDismiss: myCallBack // the callback to run when the alert is dismissed
 }
 
 function myCallback() { ... }
@@ -90,8 +83,8 @@ AlertMe.create(msg);
 You can also use html text as content for your alerts, but be sure to add the __isTrustedHtml__ flag property to your settings or to the message you want to be threated as html, like so:
 ```javascript
 var msg = {
-    content: 'visit our <a href="#!">page</a> on github',
-    isTrustedHtml: true // this will threat the content as html text
+  content: 'visit our <a href="#!">page</a> on github',
+  isTrustedHtml: true // this will threat the content as html text
 }
 
 ```
@@ -100,9 +93,10 @@ Also you can specify to use the default __interceptor__ to notify all the HTTP r
 ```javascript
 angular.module('app')
 .config(function($httpProvider) {
-    $httpProvider.interceptors.push('alertInterceptor');
+  $httpProvider.interceptors.push('alertInterceptor');
 });
 ```
+
 But you can always disable notifications for particular HTTP calls by setting the __notifyError__ configuration option to __false__.
 ```javascript
 $http({url: '/api/something', notifyError: false});
@@ -110,11 +104,24 @@ $http.get('/api/something', {notifyError: false});
 $http.post('/api/something', data, {notifyError: false});
 ```
 
+Now you can also use the desktop notifications if supported by the browser, for now you must set it globally:
+```javascript
+angular.module('app')
+.config(function(AlertProvider) {
+  AlertProvider.configure({ desktop: true });
+});
+```
+
+### Important:
+In the new __version 1.1.0__ the create method (and also info, success, warning, danger) returns a Promise so you need to change the code if you want to upgrade from previous versions.
+
 ---
 
 ### Methods
 To all the methods listed below you can pass both a `string` or a `object`.
 * __create__; The main method for creating alerts
+* __dismiss__; Dismiss a message using his ID
+* __dismissAll__; To dismiss all the messages at once
 * __info__; This method will call create with default class 'info'
 * __success__; This method will call create with default class 'success'
 * __warning__; This method will call create with default class 'warning'
@@ -123,7 +130,10 @@ To all the methods listed below you can pass both a `string` or a `object`.
 ---
 
 ## Configurable settings:
-These settings can be edited using the method __configure__ of AlertMe service.
+These settings can be edited using the method __configure__ of AlertMe
+service.
+
+* __desktop__: If true it will try to use the desktop notifications
 * __maxNum__: max alerts to show ( default 0 = unlimited )
 * __verticalPosition__: vertical alert container position (default 'bottom')
 * __horizontalPosition__: horizontal alert container position (default 'right')
@@ -143,21 +153,13 @@ See the examples section for more details about them.
 
 ---
 
-### Message settings
-The message settings are extra settings per message that can be passed as arguments or in the object in the __create__ function. All the default settings listed above will be merged with the settings you pass to each message.
-* __title__: the alert box title
-* __content__: the alert box message (mandatory)
-* __onBeforeCreate__: you can perform you logic for every single alert or alter configuration
-
----
-
 ### Usage examples
 
-Set the max alert number to 10:
+Set the max simultaneous notification number to 10:
 ```javascript
 // Set the max alert number to 10:
 AlertMe.configure({
-    maxNum: 10
+  maxNum: 10
 });
 ```
 
@@ -165,26 +167,7 @@ Show he dismiss button for all the alerts:
 ```javascript
 // Show he dismiss button for all the alerts:
 AlertMe.configure({
-    dismissButton: true
-});
-```
-
-Don't show certain class of alerts
-```javascript
-// Example:
-// Don't show certain class of alerts
-AlertMe.configure({
-    onBeforeCreate: function(msg) {
-
-        // assume that user want
-        // to disable all info alerts
-        if( msg.className == 'info' && userDisabledInfos ) {
-
-            // this will prevent the alert from being created
-            return false;
-        }
-
-    }
+  dismissButton: true
 });
 ```
 
@@ -192,9 +175,9 @@ Error message with status code and text (assuming exist error object)
 ```javascript
 // Error message with status code and text
 AlertMe.create({
-    className: 'error',
-    title: error.status,
-    content: error.statusText
+  className: 'error',
+  title: error.status,
+  content: error.statusText
 });
 ```
 
@@ -202,9 +185,9 @@ Do a fixed alert that can't be closed
 ```javascript
 // Do a fixed alert that can't be closed
 AlertMe.create({
-    content: 'This is very important.',
-    dismissButton: false,
-    dismissOnClick: false,
-    dismissTimeout: false
+  content: 'This is very important.',
+  dismissButton: false,
+  dismissOnClick: false,
+  dismissTimeout: false
 });
 ```

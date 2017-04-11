@@ -3,31 +3,39 @@
 .notify-container.top .notify-nav { margin-top: 20px; }
 .notify-container.bottom { bottom: 0; top: auto; }
 .notify-container.bottom .notify-nav { margin-bottom: 20px; bottom: 0; top: auto; }
-.notify-container.left { left: 0; right: auto; text-align: left; }
-.notify-container.left .notify-nav { margin-left: 20px; left: 0; right: inherit; }
-.notify-container.right { right: 0; left: auto; text-align: right; }
-.notify-container.right .notify-nav { margin-right: 20px; left: inherit; right: 0; }
+.notify-container.left { left: 0; right: auto; text-align: right; }
+.notify-container.left .notify-nav { margin-left: 20px; left: 0; right: inherit; text-align: left; }
+.notify-container.left .notify-nav .notify-message-inner { text-align: right; }
+.notify-container.right { right: 0; left: auto; text-align: left; }
+.notify-container.right .notify-nav { margin-right: 20px; left: inherit; right: 0; text-align: right; }
+.notify-container.right .notify-nav .notify-message-inner { text-align: left; }
 .notify-container .notify-nav { display: inline-block; position: absolute; right: 0; left: 0; margin: 0 auto; padding: 0; list-style: none; }
-.notify-container .notify-list { list-style: none; transition-duration: 0.3s; transition-timing-function: ease; margin-bottom: 10px; cursor: pointer; }
-.notify-container .notify-list.ng-enter-active { -webkit-animation: zoomIn 0.3s; animation: zoomIn 0.3s; }
-.notify-container .notify-list.ng-leave-active { -webkit-animation: slideOutRight 0.3s; animation: slideOutRight 0.3s; }
-.notify-container .notify-alert { display: inline-block; padding: 20px; border: 1px solid transparent; border-radius: 4px; }
-.notify-container .notify-alert.default { background-color: #eee; border-color: #DBDBDB; color: #6A6A6A; }
-.notify-container .notify-alert.default .close { color: #6A6A6A; }
-.notify-container .notify-alert.success { color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; }
-.notify-container .notify-alert.success a { color: #3c763d; }
-.notify-container .notify-alert.success .close { color: #3c763d; }
-.notify-container .notify-alert.info { color: #31708f; background-color: #d9edf7; border-color: #bce8f1; }
-.notify-container .notify-alert.info a { color: #31708f; }
-.notify-container .notify-alert.info .close { color: #31708f; }
-.notify-container .notify-alert.warning { color: #8a6d3b; background-color: #fcf8e3; border-color: #faebcc; }
-.notify-container .notify-alert.warning .close { color: #8a6d3b; }
-.notify-container .notify-alert.danger { color: #a94442; background-color: #f2dede; border-color: #ebccd1; }
-.notify-container .notify-alert.danger .close { color: #a94442; }
-.notify-container .notify-alert .title { font-weight: 600; padding-right: 5px; }
-.notify-container .notify-alert .count { font-weight: 600; float: left; padding-right: 5px; }
-.notify-container .notify-alert .close { opacity: .6; position: relative; cursor: pointer; margin-left: 5px; }
-.notify-container .notify-alert:hover .close { opacity: 1; font-weight: 500; }
+.notify-container .notify-message { list-style: none; transition-duration: 0.3s; transition-timing-function: ease; margin-bottom: 10px; cursor: pointer; }
+.notify-container .notify-message.ng-enter-active { -webkit-animation: zoomIn 0.3s; animation: zoomIn 0.3s; }
+.notify-container .notify-message.ng-leave-active { -webkit-animation: slideOutRight 0.3s; animation: slideOutRight 0.3s; }
+.notify-container .notify-message-inner { position: relative; display: inline-block; border: 1px solid transparent; border-radius: 4px; }
+.notify-container .notify-message-inner > div { padding: 20px; vertical-align: middle; }
+.notify-container .notify-message-inner.dismissable .notify-content { padding-right: 30px; }
+.notify-container .notify-message-inner .notify-icon { width: 64px; height: 64px; overflow: hidden; display: inline-block; background-color: rgba(238, 238, 238, 0.8); }
+.notify-container .notify-message-inner .notify-icon img { width: 100%; height: 100%; }
+.notify-container .notify-message-inner .notify-content { display: inline-block; }
+.notify-container .notify-message-inner .notify-content .notify-title { font-weight: 600; display: block; font-size: 1.2em; }
+.notify-container .notify-message-inner .notify-content .notify-message { font-size: 1em; }
+.notify-container .notify-message-inner .count { font-weight: 600; display: inline-block; padding-right: 5px; }
+.notify-container .notify-message-inner .close { opacity: 0.6; position: absolute; cursor: pointer; right: 10px; top: 10px; font-family: sans-serif; }
+.notify-container .notify-message-inner:hover .close { opacity: 1; font-weight: 500; }
+.notify-container .notify-message-inner.default { background-color: #eee; border-color: #DBDBDB; color: #6A6A6A; }
+.notify-container .notify-message-inner.default .close { color: #6A6A6A; }
+.notify-container .notify-message-inner.success { color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; }
+.notify-container .notify-message-inner.success a { color: #3c763d; }
+.notify-container .notify-message-inner.success .close { color: #3c763d; }
+.notify-container .notify-message-inner.info { color: #31708f; background-color: #d9edf7; border-color: #bce8f1; }
+.notify-container .notify-message-inner.info a { color: #31708f; }
+.notify-container .notify-message-inner.info .close { color: #31708f; }
+.notify-container .notify-message-inner.warning { color: #8a6d3b; background-color: #fcf8e3; border-color: #faebcc; }
+.notify-container .notify-message-inner.warning .close { color: #8a6d3b; }
+.notify-container .notify-message-inner.danger { color: #a94442; background-color: #f2dede; border-color: #ebccd1; }
+.notify-container .notify-message-inner.danger .close { color: #a94442; }
 
 @-webkit-keyframes zoomIn { from { opacity: 0; -webkit-transform: scale3d(0.3, 0.3, 0.3); transform: scale3d(0.3, 0.3, 0.3); }
   50% { opacity: 1; } }
