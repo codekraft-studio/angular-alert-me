@@ -6,7 +6,7 @@ angular.module('alert-me')
 
 		'requestError': function (rejection) {
 
-			if( !rejection.config.notifyError ) {
+			if( typeof rejection.config.notifyError !== 'undefined' && !rejection.config.notifyError ) {
 				return;
 			}
 
@@ -21,7 +21,7 @@ angular.module('alert-me')
 
 		'responseError': function (rejection) {
 
-			if( !rejection.config.notifyError ) {
+			if( typeof rejection.config.notifyError !== 'undefined' && !rejection.config.notifyError ) {
 				return;
 			}
 

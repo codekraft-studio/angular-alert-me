@@ -1,7 +1,7 @@
 /**
-* Package: angular-alert-me - v1.0.5 
-* Description: a light module to help you create and manager alerts in your applications 
-* Last build: 2017-04-11 
+* Package: angular-alert-me - v1.1.0 
+* Description: Simple but fancy and light module to help you create and manager notifications with Angular. 
+* Last build: 2017-04-21 
 * @author codekraft-studio 
 * @license ISC 
 */
@@ -562,7 +562,7 @@ angular.module('alert-me')
 
 		'requestError': function (rejection) {
 
-			if( !rejection.config.notifyError ) {
+			if( typeof rejection.config.notifyError !== 'undefined' && !rejection.config.notifyError ) {
 				return;
 			}
 
@@ -577,7 +577,7 @@ angular.module('alert-me')
 
 		'responseError': function (rejection) {
 
-			if( !rejection.config.notifyError ) {
+			if( typeof rejection.config.notifyError !== 'undefined' && !rejection.config.notifyError ) {
 				return;
 			}
 
