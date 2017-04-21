@@ -143,13 +143,16 @@ angular.module('app', [
   'ngAnimate'
 ])
 
-.config(function(AlertProvider, $httpProvider) {
+.config(function(AlertProvider, $httpProvider, $qProvider) {
+
+  // Disable error message for demo purposes
+  $qProvider.errorOnUnhandledRejections(false);
 
   // configure the global module options
   AlertProvider.configure({
     verticalPosition: 'top',
     className: 'default',
-    dismissOnTimeout: false,
+    dismissOnTimeout: true,
     dismissOnClick: true,
     dismissButton: true,
     desktop: false,
