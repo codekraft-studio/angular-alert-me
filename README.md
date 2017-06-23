@@ -4,9 +4,10 @@
 ### [DEMO](http://www.codekraft.it/demos/angular-alert-me/)
 
 ### Getting started
-Download the module using npm:
+Download the module using npm or bower:
 ```bash
-npm install angular-alert-me
+npm install --save angular-alert-me
+bower install --save angular-alert-me
 ```
 or download it from github.
 
