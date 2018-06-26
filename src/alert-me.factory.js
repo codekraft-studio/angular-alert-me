@@ -35,11 +35,8 @@ angular.module('alert-me')
       return;
     }
 
-    // Create and compile the main directive
-    var $compile = $injector.get('$compile');
     var directive = $document[0].createElement('alert-me');
-    $document[0].body.appendChild( directive );
-    $compile(directive)($rootScope.$new());
+    $document[0].body.appendChild(directive);
 
   }
 

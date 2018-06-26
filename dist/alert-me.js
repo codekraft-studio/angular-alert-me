@@ -1,7 +1,7 @@
 /**
-* Package: angular-alert-me - v1.1.0 
+* Package: angular-alert-me - v1.1.2 
 * Description: Simple but fancy and light module to help you create and manager notifications with Angular. 
-* Last build: 2017-04-21 
+* Last build: 2018-06-26 
 * @author codekraft-studio 
 * @license ISC 
 */
@@ -11,7 +11,7 @@ angular.module('alert-me', [])
 * At start check if element is
 * in the document body
 */
-.run(function($log, $document, $templateCache, AlertMe) {
+.run(['$log', '$document', '$templateCache', 'AlertMe', function($log, $document, $templateCache, AlertMe) {
 
   var mainTmpl =  '<div class="notify-container {{posV}} {{posH}}">'+
                       '<ul class="notify-nav" >'+
@@ -66,11 +66,11 @@ angular.module('alert-me', [])
 
   }
 
-});
+}]);
 
 angular.module('alert-me')
 
-.directive('alertMe', function(AlertMe){
+.directive('alertMe', ['AlertMe', function(AlertMe){
 
   function _link(scope) {
     // bind messages to directive scope
@@ -89,9 +89,9 @@ angular.module('alert-me')
 
   return directive;
 
-})
+}])
 
-.directive('alertMessage', function($timeout, $q, AlertMe) {
+.directive('alertMessage', ['$timeout', '$q', 'AlertMe', function($timeout, $q, AlertMe) {
 
   function link(scope, element) {
 
@@ -186,11 +186,11 @@ angular.module('alert-me')
   return directive;
 
 
-});
+}]);
 
 angular.module('alert-me')
 
-.factory('AlertMe', function($log, $sce, $injector, $rootScope, $q, $document, Alert){
+.factory('AlertMe', ['$log', '$sce', '$injector', '$rootScope', '$q', '$document', 'Alert', function($log, $sce, $injector, $rootScope, $q, $document, Alert){
 
   // all the messages
   var _messages = [];
@@ -225,11 +225,8 @@ angular.module('alert-me')
       return;
     }
 
-    // Create and compile the main directive
-    var $compile = $injector.get('$compile');
     var directive = $document[0].createElement('alert-me');
-    $document[0].body.appendChild( directive );
-    $compile(directive)($rootScope.$new());
+    $document[0].body.appendChild(directive);
 
   }
 
@@ -552,11 +549,11 @@ angular.module('alert-me')
 
   return service;
 
-});
+}]);
 
 angular.module('alert-me')
 
-.factory('alertInterceptor', function ($q, AlertMe) {
+.factory('alertInterceptor', ['$q', 'AlertMe', function ($q, AlertMe) {
 
 	return {
 
@@ -592,7 +589,7 @@ angular.module('alert-me')
 
 	};
 
-});
+}]);
 
 angular.module('alert-me')
 
